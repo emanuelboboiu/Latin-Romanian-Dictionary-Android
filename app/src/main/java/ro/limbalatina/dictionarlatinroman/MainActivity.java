@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
 
 	// Controls used globally in the application:
 	private LinearLayout llResults = null; // for central part of the activity.
-	private LinearLayout llBottomInfo = null;; // we attribute to it in
+	private LinearLayout llBottomInfo = null; // we attribute to it in
 												// onCreate.
 
 	@Override
@@ -145,8 +145,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onPause() {
-		// Add here what you want to happens on pause:
-
+		// What we want to happens on pause:
 		if (MainActivity.isShake) {
 			// Add the following line to unregister the Sensor Manager onPause:
 			mSensorManager.unregisterListener(mShakeDetector);
@@ -519,6 +518,7 @@ public class MainActivity extends Activity {
 		ScrollView sv = new ScrollView(this);
 		LinearLayout ll = new LinearLayout(this);
 		ll.setOrientation(LinearLayout.VERTICAL);
+		ll.setPadding(mPaddingDP, mPaddingDP, mPaddingDP, mPaddingDP);
 		// Get the items to be shown in alert:
 		Resources res = getResources();
 		String[] aInformation = res.getStringArray(R.array.information_array);
