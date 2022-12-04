@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Generalities -->
+    <string name="app_name">Dicționar Latin – Român</string>
+    <string name="hello_world">Bine ați venit!</string>
+    <string name="action_settings">Setări generale</string>
+    <string name="cautare_termen">Căutare cuvânt</string>
+    <string name="tv_status_cuvinte_existente">Sunt %1$s cuvinte</string>
+    <string name="tv_website">www.limbalatina.ro</string>
+    <string name="hint_scrie_aici">Scrieți aici…</string>
+    <string name="bt_search">Căutare</string>
+    <string name="bt_switch">Inversează limbile</string>
+    <string name="bt_close">Închidere</string>
+    <string name="bt_ok">OK</string>
+
+    <string-array name="direction_array">
+        <item>Căutare în latin – român</item>
+        <item>Căutare în român – latin</item>
+    </string-array>
+
+    <string name="bt_cancel_search">Golire</string>
+    <string name="warning">Avertisment</string>
+    <string name="warning_wrong_search">Trebuie să scrieți minimum două caractere pentru a căuta!</string>
+    <string name="warning_not_results">Nu a fost găsit niciun rezultat!&lt;br>Ați căutat: &lt;i>%1$s&lt;/i>.&lt;br>Încercați din nou scriind primele litere ale cuvântului latin.</string>
+    <string name="tv_word_and_explanation">&lt;b>%1$s&lt;/b> – %2$s</string>
+    <!-- A plurals resource for results: -->
+    <plurals name="tv_number_of_results">
+        <item quantity="one">A fost găsit un rezultat</item>
+        <item quantity="few">Au fost găsite %d rezultate</item>
+        <item quantity="other">Au fost găsite %d de rezultate</item>
+    </plurals>
+
+    <!-- Parts of speech in an array: -->
+    <string-array name="parts_of_speech_array">
+        <item>indeterminabil ca parte de vorbire</item>
+        <item>substantiv</item>
+        <item>pronume</item>
+        <item>numeral</item>
+        <item>adjectiv</item>
+        <item>verb</item>
+        <item>prepoziție</item>
+        <item>conjuncție</item>
+        <item>adverb</item>
+        <item>interjecție</item>
+    </string-array>
+
+    <!-- An array with all parts of speech articled definitelly: -->
+    <string-array name="parts_of_speech_articled_array">
+        <item>Indeterminabil</item>
+        <item>Substantivul</item>
+        <item>Pronumele</item>
+        <item>Numeralul</item>
+        <item>Adjectivul</item>
+        <item>Verbul</item>
+        <item>Prepoziția</item>
+        <item>Conjuncția</item>
+        <item>Adverbul</item>
+        <item>Interjecția</item>
+    </string-array>
+
+    <!-- The Main Menu Items: -->
+    <string name="mnu_settings_submenu">Setări</string>
+    <string name="mnu_settings">Generale</string>
+    <string name="mnu_display">Dimensiune text</string>
+    <string name="mnu_open_send">Propuneți un cuvânt</string>
+    <string name="mnu_about">Despre Dicționar</string>
+    <string name="mnu_open_help">Ajutor</string>
+    <string name="mnu_online_version">Vedeți varianta web</string>
+    <string name="mnu_default_settings">Resetare program la valorile inițiale</string>
+    <string name="title_default_settings">Resetare Dicționar Latin – Român</string>
+    <string name="body_default_settings">Sunteți sigur că vreți să resetați toate valorile?\nProgramul va fi in starea inițială.</string>
+
+    <!-- Settings Activity: -->
+    <string name="title_activity_settings">Setări generale</string>
+    <string name="enable_sounds">Redare sunete</string>
+    <string name="enable_shake">Căutare nouă la scuturare</string>
+    <string name="enable_screen_awake">Menținere ecran activ</string>
+    <string name="enable_ime_action">Butonul ENTER al tastaturii virtuale caută direct</string>
+
+    <!-- Display Settings Activity: -->
+    <string name="title_activity_display_settings">Setări de afișare</string>
+    <string name="display_choose_size">Dimensiunea textului rezultatelor:</string>
+
+    <!-- Strings for paradigm class: -->
+    <string name="title_part_of_speech">Parte de vorbire</string>
+    <string name="body_part_of_speech">&lt;b>%1$s&lt;/b> este %2$s</string>
+    <string name="paradigm_inflexible_information">&lt;b>%1$s&lt;/b> este o parte de vorbire neflexibilă.</string>
+    <string name="paradigm_indeterminable_information">Nu se poate determina partea de vorbire pentru a realiza paradigma.</string>
+    <!-- An array with all cases for noun: -->
+    <string-array name="paradigm_noun_cases_array">
+        <item>Nominativ</item>
+        <item>Genitiv</item>
+        <item>Dativ</item>
+        <item>Acuzativ</item>
+        <item>Vocativ</item>
+        <item>Ablativ</item>
+    </string-array>
+
+    <string name="paradigm_declension_title">Declinare – &lt;i>%1$s&lt;/i></string>
+    <!-- A template for noun with singular and plural. the place holders 1 means number of declension, 2 singular and 3 plural: -->
+    <string name="paradigm_declension_template1">Substantiv – &lt;b>Declinarea %1$s&lt;/b>&lt;br>&lt;br>&lt;b>Singular:&lt;/b>&lt;br>%2$s&lt;br>&lt;b>Plural:&lt;/b>&lt;br>%3$s</string>
+    <!-- A template for nouns only with singular, place holder 1 means the declension, and 2 the singular: -->
+    <string name="paradigm_declension_template2">Substantiv – &lt;b>Declinarea %1$s&lt;/b>&lt;br>&lt;br>&lt;b>Singular:&lt;/b>&lt;br>%2$s</string>
+    <!-- A template for nouns only with plural, place holder 1 means the declension, and 2 the plural: -->
+    <string name="paradigm_declension_template3">Substantiv – &lt;b>Declinarea %1$s&lt;/b>&lt;br>&lt;br>&lt;b>Plural:&lt;/b>&lt;br>%2$s</string>
+    <string name="paradigm_declension_cannot_be_created">Din motive tehnice, nu vă putem declina acest substantiv.&lt;br>În prezent sunt declinate doar substantivele de declinarea I.&lt;br>În prezent se lucrează la extinderea sistemului de generare paradigme.</string>
+
+    <!-- About dialog: -->
+    <string name="about">Despre Dicționar</string>
+    <string name="app_version">Dicționar Latin – Român, versiunea 2.3.1</string>
+    <string name="app_last_update">Ultima actualizare: duminică, 27 ianuarie 2019</string>
+    <string name="app_release_date">Versiune 1.0 finalizată vineri, 4 septembrie 2015</string>
+    <string name="app_creator">Programat de Emanuel Boboiu (Manu)</string>
+    <string name="phone_number">Telefon: +40740203043</string>
+    <string name="email_address">E-mail: webmaster@limbalatina.ro</string>
+    <string name="web_address">Web: www.limbalatina.ro</string>
+    <string name="app_credits2">Pictogramele și imaginile au fost create de Iulian Duma și Ștefan Halus.</string>
+    <string name="app_credits3">Cuvintele au fost introduse manual în baza de date de Marian Dorel Farcaș și Emanuel Boboiu</string>
+
+    <!-- Unique ID for advertising: -->
+    <string name="banner_ad_unit_id">ca-app-pub-9705662823127450/9267820299</string>
+    <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
+
+    <!-- An array string for information: -->
+    <string name="mnu_information">Informații</string>
+    <string name="information_alert_title">Informații despre dicționar</string>
+
+    <string-array name="information_array">
+        <item>Dicționarul de față a fost creat în primă versiune în cadrul postuniversitarului Informatică Aplicată și Programare afiliat Universității Tehnice din Cluj-Napoca, constituind totodată subiectul lucrării de disertație susținută de Emanuel Boboiu în iulie 2015.</item>
+        <item>Un punct de pornire a fost constituit de o bază de date cu termeni latini și explicațiile în limba română ale acestora.</item>
+        <item>Baza de date mai sus menţionată a fost creată manual de către Marian Dorel Farcaș și Emanuel Boboiu și stă de asemenea în spatele variantei web a dicționarului, aflată la www.dictionar.limbalatina.ro.</item>
+        <item>Se pot căuta cuvinte latine prin introducerea primelor litere ale acestora în câmpul de editare aflat în partea de sus a ferestrei principale.</item>
+        <item>Se pot căuta și cuvinte în limba română, rezultatele fiind extrase din aceeași bază de date prin căutarea în explicațiile termenilor latini; rezultatele în urma căutării de acest fel vor arăta tot ca celelalte, întâi cuvânt latin, apoi explicație în limba română.</item>
+        <item>Atingând unul dintre rezultate, programul va încerca să genereze paradigma termenului latin, după care o va afișa într-un alert.\nSe lucrează la dezvoltarea sistemului de generare paradigme.</item>
+        <item>Atingând lung un rezultat, programul va afișa într-un alert partea de vorbire căreia îi aparține termenul latin.</item>
+        <item>Oricine poate contribui la îmbunătățirea Dicționarului Latin Român trimițând sugestii, semnalând erori la adresa de E-mail afișată în caseta Despre dicționar accesabilă din meniul aplicației.</item>
+    </string-array>
+
+    <!-- New in 2.0: -->
+    <string name="mnu_rate">Evaluați aplicația…</string>
+    <string name="title_rate_app">Evaluare</string>
+    <string name="body_rate_app">Dacă acest dicționar vă este util, vă rugăm să îl evaluați în Magazin Google Play.\nMulțumim pentru interesul acordat.</string>
+    <string name="bt_rate">Evaluați!</string>
+    <string name="bt_not_now">Nu acum!</string>
+
+    <!-- For background settings: -->
+    <string name="mnu_background_settings">Alegere fundal</string>
+    <string name="title_activity_background">Alegere fundal</string>
+    <string name="tv_background_caption">Alegeți un fundal utilizând butoanele de mai jos și salvați-l pe cel care vă place mai mult.</string>
+    <string name="tv_background_caption2">Acesta este un text de exemplu, pentru a vedea cum arată pe fundalul ales.</string>
+    <string name="tv_current_background">FUNDAL %1$s</string>
+    <string name="tv_without_background">FĂRĂ FUNDAL</string>
+    <string name="bt_previous_background">&lt;- Anteriorul</string>
+    <string name="bt_next_background">Următorul -&gt;</string>
+    <string name="bt_save_background">Salvați acest fundal!</string>
+
+</resources>

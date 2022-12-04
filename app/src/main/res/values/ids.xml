@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="tvNumberOfResults" type="id"/>
+    <item name="btSearch" type="id"/>
+    <item name="btVoice" type="id"/>
+    <item name="btCancelSearch" type="id"/>
+    <item name="btSwitch" type="id"/>
+    <item name="etWord" type="id"/>
+
+</resources>

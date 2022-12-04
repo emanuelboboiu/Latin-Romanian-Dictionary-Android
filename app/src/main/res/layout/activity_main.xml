@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/llMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/llSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/search_icons"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@id/btSwitch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/search_icons"
+                android:contentDescription="@string/bt_switch"
+                android:nextFocusDown="@+id/tvNumberOfResults"
+                android:nextFocusForward="@+id/etWord"
+                android:nextFocusLeft="@id/btSwitch"
+                android:nextFocusRight="@id/etWord"
+                android:onClick="switchButton"
+                android:src="@drawable/flag0" />
+
+            <EditText
+                android:id="@id/etWord"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:background="@color/search_icons"
+                android:gravity="center_horizontal"
+                android:hint="@string/hint_scrie_aici"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:nextFocusDown="@+id/tvNumberOfResults"
+                android:nextFocusForward="@+id/btSearch"
+                android:nextFocusLeft="@id/btSwitch"
+                android:nextFocusRight="@id/btSearch"
+                android:textColor="@color/whiteText" >
+            </EditText>
+
+            <ImageButton
+                android:id="@id/btSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/search_icons"
+                android:contentDescription="@string/bt_search"
+                android:nextFocusDown="@+id/tvNumberOfResults"
+                android:nextFocusForward="@+id/btCancelSearch"
+                android:nextFocusLeft="@id/etWord"
+                android:nextFocusRight="@id/btCancelSearch"
+                android:onClick="searchButton"
+                android:src="@android:drawable/ic_menu_search" />
+
+            <ImageButton
+                android:id="@id/btCancelSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/search_icons"
+                android:contentDescription="@string/bt_cancel_search"
+                android:nextFocusDown="@+id/tvNumberOfResults"
+                android:nextFocusForward="@+id/btCancelSearch"
+                android:nextFocusLeft="@id/etWord"
+                android:nextFocusRight="@id/tvNumberOfResults"
+                android:onClick="cancelSearchButton"
+                android:src="@android:drawable/ic_input_delete" />
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/svResults"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:isScrollContainer="false"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/results_top_margin" >
+
+            <LinearLayout
+                android:id="@+id/llResults"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@id/tvNumberOfResults"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:nextFocusUp="@id/btSearch" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llBottomInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/tv_status_cuvinte_existente"
+            android:textSize="@dimen/text_size_main"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvWebsite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/tv_website"
+            android:textSize="@dimen/text_size_main"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</RelativeLayout>
