@@ -134,13 +134,13 @@ public class Noun {
 		// Now we process the place holders for template:
 		StringBuilder singular = new StringBuilder("");
 		for (int i = 0; i < aCases.length; i++) {
-			singular.append(aCases[i] + " – &lt;lt>" + theme
+			singular.append(aCases[i] + "  &lt;lt>" + theme
 					+ aTerminationsSingular[i] + "&lt;/i>&lt;br>");
 		} // end for singular.
 
 		StringBuilder plural = new StringBuilder("");
 		for (int i = 0; i < aCases.length; i++) {
-			plural.append(aCases[i] + " – &lt;i>" + theme
+			plural.append(aCases[i] + "  &lt;i>" + theme
 					+ aTerminationsPlural[i] + "&lt;/i>&lt;br>");
 		} // end for plural.
 
