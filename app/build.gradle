@@ -8,6 +8,7 @@ android {
         applicationId "ro.limbalatina.dictionarlatinroman"
         minSdkVersion 23
         targetSdkVersion 33
+        resConfigs "ro"
     }
 
     buildTypes {

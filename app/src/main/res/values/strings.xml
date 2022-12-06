@@ -6,7 +6,6 @@
     <string name="hello_world">Bine ați venit!</string>
     <string name="action_settings">Setări generale</string>
     <string name="cautare_termen">Căutare cuvânt</string>
-    <string name="tv_status_cuvinte_existente">Sunt %1$s cuvinte</string>
     <string name="tv_website">www.limbalatina.ro</string>
     <string name="hint_scrie_aici">Scrieți aici…</string>
     <string name="bt_search">Căutare</string>
@@ -151,5 +150,15 @@
     <string name="bt_previous_background">&lt;- Anteriorul</string>
     <string name="bt_next_background">Următorul -&gt;</string>
     <string name="bt_save_background">Salvați acest fundal!</string>
+
+    <!-- New in 3.1: -->
+    <string name="warning_db_cannot_be_deleted">Vechea bază de date nu a putut fi ștearsă</string>
+    <string name="tv_status_cuvinte_existente">Cuvinte existente</string>
+    <!-- A plurals resource for words available, the TV found in the bottom part of the main window: -->
+    <plurals name="tv_available_words">
+        <item quantity="one">Este %d cuvânt</item>
+        <item quantity="few">Sunt %d cuvinte</item>
+        <item quantity="other">Sunt %d de cuvinte</item>
+    </plurals>
 
 </resources>
