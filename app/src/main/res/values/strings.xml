@@ -104,7 +104,7 @@
     <string name="paradigm_declension_template2">Substantiv – &lt;b>Declinarea %1$s&lt;/b>&lt;br>&lt;br>&lt;b>Singular:&lt;/b>&lt;br>%2$s</string>
     <!-- A template for nouns only with plural, place holder 1 means the declension, and 2 the plural: -->
     <string name="paradigm_declension_template3">Substantiv – &lt;b>Declinarea %1$s&lt;/b>&lt;br>&lt;br>&lt;b>Plural:&lt;/b>&lt;br>%2$s</string>
-    <string name="paradigm_declension_cannot_be_created">Din motive tehnice, nu vă putem declina acest substantiv.&lt;br>În prezent sunt declinate doar substantivele de declinarea I.&lt;br>În prezent se lucrează la extinderea sistemului de generare paradigme.</string>
+    <string name="paradigm_declension_cannot_be_created">Din motive tehnice, nu putem declina acest substantiv.&lt;br>În prezent sunt afișate doar paradigme pentru substantivele de declinarea I.&lt;br>În prezent se lucrează la extinderea sistemului de generare paradigme.</string>
 
     <!-- About dialog: -->
     <string name="about">Despre Dicționar</string>
