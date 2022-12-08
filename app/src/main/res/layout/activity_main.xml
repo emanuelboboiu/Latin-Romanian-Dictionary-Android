@@ -118,6 +118,8 @@
             android:id="@+id/tvStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/tv_status_cuvinte_existente"
             android:textSize="@dimen/text_size_main"

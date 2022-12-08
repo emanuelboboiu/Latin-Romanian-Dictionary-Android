@@ -49,4 +49,16 @@ public class DBAdapter {
         return mCur;
     }
 
+    // A method to update a table:
+    public boolean updateData(String sql) {
+        mDb.execSQL(sql);
+        return true;
+    } // end update data.
+
+    // A method to insert into a table:
+    public boolean insertData(String sql) {
+        mDb.execSQL(sql);
+        return true;
+    } // end insert data.
+
 } // end class TestAdapter.

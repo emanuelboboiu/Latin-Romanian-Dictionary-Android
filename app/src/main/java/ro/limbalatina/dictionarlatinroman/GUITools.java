@@ -68,6 +68,11 @@ public class GUITools {
         alert.show();
     } // end alert static method.
 
+    // A method to show an unkwnown error:
+    public static void showUnknownErrorAlert(Context context) {
+        GUITools.alert(context, context.getString(R.string.error_title), context.getString(R.string.error_unknown), context.getString(R.string.bt_ok));
+    } // end unknownErrorAlert() method.
+
     // A method for about dialog for this package:
     public static void aboutDialog(Context context) {
         // Inflate the about message contents
