@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,26 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 
 /*
  * Class started on Sunday, 31 May 2015, created by Emanuel Boboiu.
@@ -60,8 +81,10 @@ public class MainActivity extends Activity {
 
     // Controls used globally in the application:
     private LinearLayout llResults = null; // for central part of the activity.
-    private LinearLayout llBottomInfo = null; // we attribute to it in
-    // onCreate.
+    private LinearLayout llBottomInfo = null; // we attribute to it in onCreate.
+
+    // Added in version 3.1, for update dictionary from the server:
+    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +94,8 @@ public class MainActivity extends Activity {
         // Charge settings:
         Settings set = new Settings(this);
         set.chargeSettings();
+
+        mQueue = Volley.newRequestQueue(this);
 
         // Calculate the pixels in DP for mPaddingDP, for TextViews of the
         // results:
@@ -120,6 +145,9 @@ public class MainActivity extends Activity {
          */
         mShakeDetector.setOnShakeListener(this::handleShakeEvent);
         // End initialisation of the shake detector.
+
+        // To be deleted after tests:
+        requestJSON();
     } // end onCreate() method.
 
     @Override
@@ -537,5 +565,78 @@ public class MainActivity extends Activity {
 
         // cancelSearchActions(0);
     } // end updateSearchMessage() method.
+
+    // Added in 3.1, for update the database:
+    private void requestJSON() {
+        String URLstring = "https://www.limbalatina.ro/android/api.php?act=updateDictionary&maxIdInPhone=21700";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLstring,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        // GUITools.alert(MainActivity.this, "In loc de log", "" + response, "Inchidere");
+                        // Log.d("strrrrr", ">>" + response);
+
+                        try {
+                            // Getting the whole json object from the response:
+                            JSONObject obj = new JSONObject(response);
+
+                            // We create an array list of WodrModels:
+                            ArrayList<WordModel> wordModelArrayList = new ArrayList<>();
+
+                            // We convert into an json of type array:
+                            JSONArray dataArray = obj.getJSONArray("package");
+
+                            // Now through a for we fill the array list with models of type WordModel:
+
+                            for (int i = 0; i < dataArray.length(); i++) {
+
+                                WordModel wordModel = new WordModel();
+                                JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                wordModel.setId(dataobj.getString("id"));
+                                wordModel.setWord(dataobj.getString("cuvant"));
+                                wordModel.setExplanation(dataobj.getString("expl"));
+                                wordModel.setDate(dataobj.getString("datains"));
+
+                                wordModelArrayList.add(wordModel);
+                            } // end for.
+
+                            // Now we have the array list of WordModels, we can use it in another method to update effectivelly:
+                            updateDBEffectivelly(wordModelArrayList);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            GUITools.alert(MainActivity.this, "Mesaj din Catch", e.getMessage(), "Gata");
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //displaying the error in toast if occurrs
+                        GUITools.alert(MainActivity.this, "O eroare mica", error.getMessage(), "Schwarz3");
+                    }
+                });
+
+        //creating a request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //adding the string request to request queue
+        requestQueue.add(stringRequest);
+    } // end requestJSON() method.
+
+    private void updateDBEffectivelly(ArrayList<WordModel> wordModelArrayList) {
+        String str = "";
+        for (int i = 0; i < wordModelArrayList.size(); i++) {
+            str +=
+                    wordModelArrayList.get(i).getId() + " " +
+                            wordModelArrayList.get(i).getWord() + " " +
+                            wordModelArrayList.get(i).getExplanation() + " " +
+                            wordModelArrayList.get(i).getDate() + "\n";
+        } // end for.
+
+        GUITools.alert(MainActivity.this, "Rezultate de proba", str, "Super!");
+    } // end updateDBEffectivelly() method.
 
 } // end MainActivity class.
