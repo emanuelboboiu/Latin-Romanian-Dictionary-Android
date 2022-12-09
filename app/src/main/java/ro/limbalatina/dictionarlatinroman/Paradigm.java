@@ -75,13 +75,9 @@ public class Paradigm {
     } // end determinePartOfSpeechAsString method.
 
     // A method to show part of speech of current latinWord:
-    public void showPartOfSpeech() {
-        CharSequence cs = MyHtml.fromHtml(String.format(
-                context.getString(R.string.body_part_of_speech), latinWord,
-                sPartOfSpeech));
-        GUITools.alert(context,
-                context.getString(R.string.title_part_of_speech),
-                cs.toString(), context.getString(R.string.bt_close));
+    public void showPartOfSpeech(String dateOfInsertion) {
+        CharSequence cs = MyHtml.fromHtml(String.format(context.getString(R.string.body_part_of_speech), latinWord, sPartOfSpeech, dateOfInsertion));
+        GUITools.alert(context, context.getString(R.string.title_part_of_speech), cs.toString(), context.getString(R.string.bt_close));
     } // end showPartOfSpeech() method.
 
     // A method to make the paradigm for current latinWord:

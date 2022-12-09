@@ -16,6 +16,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Random;
 
 /*
@@ -68,7 +70,7 @@ public class GUITools {
         alert.show();
     } // end alert static method.
 
-    // A method to show an unkwnown error:
+    // A method to show an unknown error:
     public static void showUnknownErrorAlert(Context context) {
         GUITools.alert(context, context.getString(R.string.error_title), context.getString(R.string.error_unknown), context.getString(R.string.bt_ok));
     } // end unknownErrorAlert() method.
@@ -205,5 +207,70 @@ public class GUITools {
             ll.setBackgroundResource(resId);
         } // end if is a LinearLayout.
     } // end setLayoutInitial() method.
+
+
+    // A method to get current time in seconds:
+    public static long getTimeInSeconds() {
+        Calendar cal = Calendar.getInstance();
+        long timeInMilliseconds = cal.getTimeInMillis();
+        return timeInMilliseconds / 1000;
+    } // end getTimeInSeconds() method.
+
+    // A static method to format a friendly date as string:
+    public static String timeStampToString(Context context, long curTime) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(curTime);
+
+        // Now format the string:
+        // See if it is today or yesterday:
+        int today = getIsToday(curTime);
+        String dayOfWeek;
+        if (today == 1) {
+            dayOfWeek = context.getString(R.string.today);
+        } else if (today == 2) {
+            dayOfWeek = context.getString(R.string.yesterday);
+        } else {
+            dayOfWeek = cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG,
+                    Locale.getDefault());
+        }
+
+        // Make the hour and minute with 0 in front if they are less than 10:
+        String curHour;
+        int iHour = cal.get(Calendar.HOUR_OF_DAY);
+        if (iHour < 10) {
+            curHour = "0" + iHour;
+        } else {
+            curHour = "" + iHour;
+        }
+        String curMinute;
+        int iMinute = cal.get(Calendar.MINUTE);
+        if (iMinute < 10) {
+            curMinute = "0" + iMinute;
+        } else {
+            curMinute = "" + iMinute;
+        }
+
+        return String.format(context.getString(R.string.date_format), dayOfWeek, "" + cal.get(Calendar.DAY_OF_MONTH), "" + cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()), "" + cal.get(Calendar.YEAR), curHour, curMinute);
+    } // end timeStampToString() method.
+
+    /*
+     * This method returns 1 if a date in milliseconds at parameter is today, 2
+     * if it was yesterday or 0 on another date.
+     */
+    public static int getIsToday(long smsTimeInMillis) {
+        Calendar smsTime = Calendar.getInstance();
+        smsTime.setTimeInMillis(smsTimeInMillis);
+
+        Calendar now = Calendar.getInstance();
+        if (now.get(Calendar.DATE) == smsTime.get(Calendar.DATE)) {
+            return 1; // today.
+        } else if (now.get(Calendar.DATE) - smsTime.get(Calendar.DATE) == 1) {
+            return 2; // yesterday.
+        } else if (smsTime.get(Calendar.DATE) - now.get(Calendar.DATE) == 1) {
+            return 3; // tomorrow.
+        } else {
+            return 0; // another date.
+        }
+    } // end determine if a date is today or yesterday.
 
 } // end GUITools class.

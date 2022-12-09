@@ -21,8 +21,8 @@
     <string name="bt_cancel_search">Golire</string>
     <string name="warning">Avertisment</string>
     <string name="warning_wrong_search">Trebuie să scrieți minimum două caractere pentru a căuta!</string>
-    <string name="warning_not_results">Nu a fost găsit niciun rezultat!&lt;br>Ați căutat: &lt;i>%1$s&lt;/i>.&lt;br>Încercați din nou scriind primele litere ale cuvântului latin.</string>
-    <string name="tv_word_and_explanation">&lt;b>%1$s&lt;/b> – %2$s</string>
+    <string name="warning_not_results"><![CDATA[Nu a fost găsit niciun rezultat!<br>Ați căutat: <i>%1$s</i>.<br>Încercați din nou scriind primele litere ale cuvântului latin.]]></string>
+    <string name="tv_word_and_explanation"><![CDATA[<b>%1$s</b> – %2$s]]></string>
     <!-- A plurals resource for results: -->
     <plurals name="tv_number_of_results">
         <item quantity="one">A fost găsit un rezultat</item>
@@ -83,8 +83,8 @@
 
     <!-- Strings for paradigm class: -->
     <string name="title_part_of_speech">Parte de vorbire</string>
-    <string name="body_part_of_speech">&lt;b>%1$s&lt;/b> este %2$s</string>
-    <string name="paradigm_inflexible_information">&lt;b>%1$s&lt;/b> este o parte de vorbire neflexibilă.</string>
+    <string name="body_part_of_speech"><![CDATA[<b>%1$s</b> este %2$s<br><br>Termen inserat <b>%3$s</b>]]></string>
+    <string name="paradigm_inflexible_information"><![CDATA[<b>%1$s</b> este o parte de vorbire neflexibilă.]]></string>
     <string name="paradigm_indeterminable_information">Nu se poate determina partea de vorbire pentru a realiza paradigma.</string>
     <!-- An array with all cases for noun: -->
     <string-array name="paradigm_noun_cases_array">
@@ -96,14 +96,14 @@
         <item>Ablativ</item>
     </string-array>
 
-    <string name="paradigm_declension_title">Declinare – &lt;i>%1$s&lt;/i></string>
+    <string name="paradigm_declension_title"><![CDATA[Declinare – <i>%1$s</i>]]></string>
     <!-- A template for noun with singular and plural. the place holders 1 means number of declension, 2 singular and 3 plural: -->
-    <string name="paradigm_declension_template1">Substantiv – &lt;b>Declinarea %1$s&lt;/b>&lt;br>&lt;br>&lt;b>Singular:&lt;/b>&lt;br>%2$s&lt;br>&lt;b>Plural:&lt;/b>&lt;br>%3$s</string>
+    <string name="paradigm_declension_template1"><![CDATA[Substantiv – <b>Declinarea %1$s</b><br><br><b>Singular:</b><br>%2$s<br><b>Plural:</b><br>%3$s]]></string>
     <!-- A template for nouns only with singular, place holder 1 means the declension, and 2 the singular: -->
-    <string name="paradigm_declension_template2">Substantiv – &lt;b>Declinarea %1$s&lt;/b>&lt;br>&lt;br>&lt;b>Singular:&lt;/b>&lt;br>%2$s</string>
+    <string name="paradigm_declension_template2"><![CDATA[Substantiv – <b>Declinarea %1$s</b><br><br><b>Singular:</b><br>%2$s]]></string>
     <!-- A template for nouns only with plural, place holder 1 means the declension, and 2 the plural: -->
-    <string name="paradigm_declension_template3">Substantiv – &lt;b>Declinarea %1$s&lt;/b>&lt;br>&lt;br>&lt;b>Plural:&lt;/b>&lt;br>%2$s</string>
-    <string name="paradigm_declension_cannot_be_created">Din motive tehnice, nu putem declina acest substantiv.&lt;br>În prezent sunt afișate doar paradigme pentru substantivele de declinarea I.&lt;br>În prezent se lucrează la extinderea sistemului de generare paradigme.</string>
+    <string name="paradigm_declension_template3"><![CDATA[Substantiv – <b>Declinarea %1$s</b><br><br><b>Plural:</b><br>%2$s]]></string>
+    <string name="paradigm_declension_cannot_be_created"><![CDATA[Din motive tehnice, nu putem declina acest substantiv.<br>În prezent sunt afișate doar paradigme pentru substantivele de declinarea I.]]></string>
 
     <!-- About dialog: -->
     <string name="about">Despre Dicționar</string>
@@ -172,5 +172,12 @@
         <item quantity="few">Sunt %d cuvinte</item>
         <item quantity="other">Sunt %d de cuvinte</item>
     </plurals>
+
+    <!-- Strings for date: -->
+    <string name="today">azi</string>
+    <string name="yesterday">ieri</string>
+    <string name="msg_time">Este ora %1$s</string>
+    <string name="date_format">%1$s, %2$s %3$s %4$s, %5$s:%6$s</string>
+    <string name="old_date_insertion">înainte de 16 aprilie 2010</string>
 
 </resources>

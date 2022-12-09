@@ -105,8 +105,7 @@ public class Noun {
             aTerminationsPlural = new String[]{"ae", "arum", "abus", "as",
                     "ae", "abus"};
         } else {
-            aTerminationsPlural = new String[]{"ae", "arum", "is", "as",
-                    "ae", "is"};
+            aTerminationsPlural = new String[]{"ae", "arum", "is", "as", "ae", "is"};
         }
 
         // Get the template1 for nouns with singular and plural:
@@ -139,18 +138,13 @@ public class Noun {
             plural.append(aCases[i]).append(" &lt;i>").append(theme).append(aTerminationsPlural[i]).append("&lt;/i>&lt;br>");
         } // end for plural.
 
-        // Now we format the string including the singular and the plural if
-        // needed:
+// Now we format the string including the singular and the plural if needed:
         if (typeOfDeclension == 1) {
-            temp = String.format(template, "I",
-                    MyHtml.fromHtml(singular.toString()).toString(), MyHtml
-                            .fromHtml(plural.toString()).toString());
+            temp = String.format(template, "I", MyHtml.fromHtml(singular.toString()).toString(), MyHtml.fromHtml(plural.toString()).toString());
         } else if (typeOfDeclension == 2) {
-            temp = String.format(template, "I",
-                    MyHtml.fromHtml(singular.toString()).toString());
+            temp = String.format(template, "I", MyHtml.fromHtml(singular.toString()).toString());
         } else if (typeOfDeclension == 3) {
-            temp = String.format(template, "I",
-                    MyHtml.fromHtml(plural.toString()).toString());
+            temp = String.format(template, "I", MyHtml.fromHtml(plural.toString()).toString());
         } else {
             // The declension cannot be created:
             temp = String.format(template, "I");

@@ -35,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /*
@@ -184,9 +185,7 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        /* Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml. */
         int id = item.getItemId();
 
         if (id == R.id.mnuActionSettings) {
@@ -418,8 +417,7 @@ public class MainActivity extends Activity {
                 ll.addView(tv);
 
                 // Create TextViews for each word:
-                // For limit, we have a variable which will be incremented until
-                // resultsLimit:
+                // For limit, we have a variable which will be incremented until resultsLimit:
                 int it = 0;
                 cursor.moveToFirst();
                 do {
@@ -428,9 +426,11 @@ public class MainActivity extends Activity {
                     // tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
                     tv.setPadding(mPaddingDP, mPaddingDP, mPaddingDP,
                             mPaddingDP);
-                    // w means word, e means explanation:
+                    // w means word, e means explanation  and d means the date:
                     final String w = cursor.getString(1);
                     final String e = cursor.getString(2);
+                    final String d = cursor.getString(3);
+
                     String tvText = String.format(
                             getString(R.string.tv_word_and_explanation), w, e);
                     CharSequence tvSeq = MyHtml.fromHtml(tvText);
@@ -446,7 +446,7 @@ public class MainActivity extends Activity {
                     // For a long click, show part of speech:
                     tv.setOnLongClickListener(view -> {
                         Paradigm p = new Paradigm(mFinalContext, w, e);
-                        p.showPartOfSpeech();
+                        p.showPartOfSpeech(formatDateOfInsertionInDB(d));
                         return true;
                     });
                     // End add listener for long click on a result.
@@ -579,14 +579,11 @@ public class MainActivity extends Activity {
                     @Override
                     public void onResponse(String response) {
 
-                        // GUITools.alert(MainActivity.this, "In loc de log", "" + response, "Inchidere");
-                        // Log.d("strrrrr", ">>" + response);
-
                         try {
                             // Getting the whole json object from the response:
                             JSONObject obj = new JSONObject(response);
 
-                            // We create an array list of WodrModels:
+                            // We create an array list of WordModels:
                             ArrayList<WordModel> wordModelArrayList = new ArrayList<>();
 
                             // We convert into an json of type array:
@@ -603,8 +600,8 @@ public class MainActivity extends Activity {
                                 wordModelArrayList.add(wordModel);
                             } // end for.
 
-                            // Now we have the array list of WordModels, we can use it in another method to update effectivelly:
-                            updateDBEffectivelly(wordModelArrayList);
+                            // Now we have the array list of WordModels, we can use it in another method to update effectively:
+                            updateDBEffectively(wordModelArrayList);
 
                         } catch (JSONException e) {
                             // e.printStackTrace();
@@ -615,7 +612,7 @@ public class MainActivity extends Activity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // Displaying an error if it occurrs
+                        // Displaying an error if it occurs
                         GUITools.showUnknownErrorAlert(MainActivity.this);
                     }
                 });
@@ -627,7 +624,7 @@ public class MainActivity extends Activity {
         requestQueue.add(stringRequest);
     } // end requestJSON() method.
 
-    private void updateDBEffectivelly(ArrayList<WordModel> wordModelArrayList) {
+    private void updateDBEffectively(ArrayList<WordModel> wordModelArrayList) {
 
         // If the array list has at least one entry:
         int total = wordModelArrayList.size();
@@ -641,7 +638,7 @@ public class MainActivity extends Activity {
                 // GUITools.alert(MainActivity.this, "Un SQL demonstrativ", sql, "OK!");
             } // end for.
 
-            // We anounce the number of added words with plural resource:
+            // We announce the number of added words with plural resource:
             Resources res = getResources();
             String addedWords = res.getQuantityString(R.plurals.tv_added_words, totalInsertions, totalInsertions);
             String updateMessage = String.format(getString(R.string.succes_update), addedWords);
@@ -650,6 +647,19 @@ public class MainActivity extends Activity {
         } else { // no entries for update:
             GUITools.alert(MainActivity.this, MainActivity.this.getString(R.string.info_title), MainActivity.this.getString(R.string.no_new_words), MainActivity.this.getString(R.string.bt_ok));
         } // en dif not new words for update.
-    } // end updateDBEffectivelly() method.
+    } // end updateDBEffectively() method.
+
+    // A method to get the date of an added word:
+    private String formatDateOfInsertionInDB(String d) {
+        String fDate;
+        if (d.startsWith("0")) {
+            fDate = getString(R.string.old_date_insertion); // this is when it is not valid, we have 000 in db.
+        } else {
+            Timestamp timestamp = Timestamp.valueOf(d);
+            fDate = GUITools.timeStampToString(this, timestamp.getTime());
+        } // end if it is valid, no 0 start.
+
+        return fDate;
+    } // end getDateOfInsertionInDB() method.
 
 } // end MainActivity class.
