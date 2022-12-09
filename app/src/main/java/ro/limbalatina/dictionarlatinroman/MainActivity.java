@@ -26,8 +26,6 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -76,9 +74,6 @@ public class MainActivity extends Activity {
     private LinearLayout llResults = null; // for central part of the activity.
     private LinearLayout llBottomInfo = null; // we attribute to it in onCreate.
 
-    // Added in version 3.1, for update dictionary from the server:
-    private RequestQueue mQueue;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,8 +82,6 @@ public class MainActivity extends Activity {
         // Charge settings:
         Settings set = new Settings(this);
         set.chargeSettings();
-
-        mQueue = Volley.newRequestQueue(this);
 
         // Calculate the pixels in DP for mPaddingDP, for TextViews of the
         // results:
@@ -304,12 +297,7 @@ public class MainActivity extends Activity {
         TextView tv = findViewById(R.id.tvStatus);
         tv.setText(availableWords);
 // Make this text view clickable, call the update method, the same as from the menu:
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestJSON();
-            }
-        });
+        tv.setOnClickListener(v -> requestJSON());
 
         // Add an action listener for the keyboard:
         EditText input = findViewById(R.id.etWord);
@@ -575,46 +563,40 @@ public class MainActivity extends Activity {
 
         String URLstring = "https://www.limbalatina.ro/android/api.php?act=updateDictionary&maxIdInPhone=" + maxId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLstring,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                response -> {
 
-                        try {
-                            // Getting the whole json object from the response:
-                            JSONObject obj = new JSONObject(response);
+                    try {
+                        // Getting the whole json object from the response:
+                        JSONObject obj = new JSONObject(response);
 
-                            // We create an array list of WordModels:
-                            ArrayList<WordModel> wordModelArrayList = new ArrayList<>();
+                        // We create an array list of WordModels:
+                        ArrayList<WordModel> wordModelArrayList = new ArrayList<>();
 
-                            // We convert into an json of type array:
-                            JSONArray dataArray = obj.getJSONArray("package");
+                        // We convert into an json of type array:
+                        JSONArray dataArray = obj.getJSONArray("package");
 
-                            // Now through a for we fill the array list with models of type WordModel:
-                            for (int i = 0; i < dataArray.length(); i++) {
-                                WordModel wordModel = new WordModel();
-                                JSONObject dataobj = dataArray.getJSONObject(i);
-                                wordModel.setId(dataobj.getString("id"));
-                                wordModel.setWord(dataobj.getString("cuvant"));
-                                wordModel.setExplanation(dataobj.getString("expl"));
-                                wordModel.setDate(dataobj.getString("datains"));
-                                wordModelArrayList.add(wordModel);
-                            } // end for.
+                        // Now through a for we fill the array list with models of type WordModel:
+                        for (int i = 0; i < dataArray.length(); i++) {
+                            WordModel wordModel = new WordModel();
+                            JSONObject dataobj = dataArray.getJSONObject(i);
+                            wordModel.setId(dataobj.getString("id"));
+                            wordModel.setWord(dataobj.getString("cuvant"));
+                            wordModel.setExplanation(dataobj.getString("expl"));
+                            wordModel.setDate(dataobj.getString("datains"));
+                            wordModelArrayList.add(wordModel);
+                        } // end for.
 
-                            // Now we have the array list of WordModels, we can use it in another method to update effectively:
-                            updateDBEffectively(wordModelArrayList);
+                        // Now we have the array list of WordModels, we can use it in another method to update effectively:
+                        updateDBEffectively(wordModelArrayList);
 
-                        } catch (JSONException e) {
-                            // e.printStackTrace();
-                            GUITools.showUnknownErrorAlert(MainActivity.this);
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Displaying an error if it occurs
+                    } catch (JSONException e) {
+                        // e.printStackTrace();
                         GUITools.showUnknownErrorAlert(MainActivity.this);
                     }
+                },
+                error -> {
+                    // Displaying an error if it occurs
+                    GUITools.showUnknownErrorAlert(MainActivity.this);
                 });
 
         //creating a request queue
