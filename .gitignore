@@ -14,6 +14,7 @@ captures/
 .cxx/
 *.apk
 output.json
+dictionar.db
 
 # IntelliJ
 *.iml

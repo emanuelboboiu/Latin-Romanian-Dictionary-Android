@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "ro.limbalatina.dictionarlatinroman",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 12,
+      "versionName": "3.1",
+      "outputFile": "app-release.apk"
+    }
+  ],
+  "elementType": "File"
+}
