@@ -92,8 +92,7 @@ public class MainActivity extends Activity {
 
         // To keep screen awake:
         if (MainActivity.isWakeLock) {
-            getWindow()
-                    .addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         } // end wake lock.
 
         // Start things for our database:
@@ -121,8 +120,7 @@ public class MainActivity extends Activity {
 
         // ShakeDetector initialisation:
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager
-                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mShakeDetector = new ShakeDetector();
         mShakeDetector.setShakeThresholdGravity(MainActivity.onshakeMagnitude);
         /*
@@ -139,8 +137,7 @@ public class MainActivity extends Activity {
         if (MainActivity.isShake) {
             // Add the following line to register the Session Manager Listener
             // onResume:
-            mSensorManager.registerListener(mShakeDetector, mAccelerometer,
-                    SensorManager.SENSOR_DELAY_UI);
+            mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
         }
     } // end onResume method.
 
@@ -199,17 +196,11 @@ public class MainActivity extends Activity {
             // Get the strings to make an alert:
             String tempTitle = getString(R.string.title_default_settings);
             String tempBody = getString(R.string.body_default_settings);
-            new AlertDialog.Builder(this)
-                    .setTitle(tempTitle)
-                    .setMessage(tempBody)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(android.R.string.yes,
-                            (dialog, whichButton) -> {
-                                Settings set = new Settings(mFinalContext);
-                                set.setDefaultSettings();
-                                set.chargeSettings();
-                            }).setNegativeButton(android.R.string.no, null)
-                    .show();
+            new AlertDialog.Builder(this).setTitle(tempTitle).setMessage(tempBody).setIcon(android.R.drawable.ic_dialog_alert).setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                Settings set = new Settings(mFinalContext);
+                set.setDefaultSettings();
+                set.chargeSettings();
+            }).setNegativeButton(android.R.string.no, null).show();
         } // end if is for set to defaults clicked in main menu.
         else if (id == R.id.mnuAboutDialog) {
             GUITools.aboutDialog(this);
@@ -330,9 +321,7 @@ public class MainActivity extends Activity {
         // Check if there is something typed there:
         if (text.length() < 2) {
             // Show a warning here if written text is shorter than 2 characters:
-            GUITools.alert(this, getString(R.string.warning),
-                    getString(R.string.warning_wrong_search),
-                    getString(R.string.bt_ok));
+            GUITools.alert(this, getString(R.string.warning), getString(R.string.warning_wrong_search), getString(R.string.bt_ok));
             SoundPlayer.playSimple(this, "results_not_available");
 
             return null;
@@ -366,13 +355,9 @@ public class MainActivity extends Activity {
             // First sear for direction 0, Latin Romanian:
             Cursor cursor;
             if (direction == 0) {
-                cursor = mDbHelper
-                        .queryData("SELECT * from dictionar WHERE termen LIKE '"
-                                + word + "%' ORDER BY termen COLLATE NOCASE");
+                cursor = mDbHelper.queryData("SELECT * from dictionar WHERE termen LIKE '" + word + "%' ORDER BY termen COLLATE NOCASE");
             } else {
-                cursor = mDbHelper
-                        .queryData("SELECT * from dictionar WHERE explicatie LIKE '%"
-                                + word + "%' ORDER BY termen COLLATE NOCASE");
+                cursor = mDbHelper.queryData("SELECT * from dictionar WHERE explicatie LIKE '%" + word + "%' ORDER BY termen COLLATE NOCASE");
 
             } // end if is Romanian Latin direction.
 
@@ -394,8 +379,7 @@ public class MainActivity extends Activity {
                 // results:
                 // First take the corresponding plural resource:
                 Resources res = getResources();
-                String foundResults = res.getQuantityString(
-                        R.plurals.tv_number_of_results, count, count);
+                String foundResults = res.getQuantityString(R.plurals.tv_number_of_results, count, count);
                 // Create the number of results text view:
                 TextView tv = new TextView(this);
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize + 1);
@@ -412,15 +396,13 @@ public class MainActivity extends Activity {
                     tv = new TextView(this);
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
                     // tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-                    tv.setPadding(mPaddingDP, mPaddingDP, mPaddingDP,
-                            mPaddingDP);
+                    tv.setPadding(mPaddingDP, mPaddingDP, mPaddingDP, mPaddingDP);
                     // w means word, e means explanation  and d means the date:
                     final String w = cursor.getString(1);
                     final String e = cursor.getString(2);
                     final String d = cursor.getString(3);
 
-                    String tvText = String.format(
-                            getString(R.string.tv_word_and_explanation), w, e);
+                    String tvText = String.format(getString(R.string.tv_word_and_explanation), w, e);
                     CharSequence tvSeq = MyHtml.fromHtml(tvText);
                     tv.setText(tvSeq);
 
@@ -499,8 +481,7 @@ public class MainActivity extends Activity {
         TextView tv = new TextView(this);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         tv.setPadding(mPaddingDP, mPaddingDP, mPaddingDP, mPaddingDP);
-        String tvText = String.format(getString(R.string.warning_not_results),
-                searchedWord);
+        String tvText = String.format(getString(R.string.warning_not_results), searchedWord);
         CharSequence tvSeq = MyHtml.fromHtml(tvText);
         tv.setText(tvSeq);
         ll.addView(tv);
@@ -546,8 +527,7 @@ public class MainActivity extends Activity {
         String flagFileName = "flag" + direction;
         ImageButton ib = findViewById(R.id.btSwitch);
         String uri = "@drawable/" + flagFileName;
-        @SuppressLint("DiscouragedApi") int imageResource = getResources().getIdentifier(uri, null,
-                getPackageName());
+        @SuppressLint("DiscouragedApi") int imageResource = getResources().getIdentifier(uri, null, getPackageName());
         ib.setImageResource(imageResource);
 
         // cancelSearchActions(0);
@@ -562,42 +542,40 @@ public class MainActivity extends Activity {
         cursor.close();
 
         String URLstring = "https://www.limbalatina.ro/android/api.php?act=updateDictionary&maxIdInPhone=" + maxId;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLstring,
-                response -> {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLstring, response -> {
 
-                    try {
-                        // Getting the whole json object from the response:
-                        JSONObject obj = new JSONObject(response);
+            try {
+                // Getting the whole json object from the response:
+                JSONObject obj = new JSONObject(response);
 
-                        // We create an array list of WordModels:
-                        ArrayList<WordModel> wordModelArrayList = new ArrayList<>();
+                // We create an array list of WordModels:
+                ArrayList<WordModel> wordModelArrayList = new ArrayList<>();
 
-                        // We convert into an json of type array:
-                        JSONArray dataArray = obj.getJSONArray("package");
+                // We convert into an json of type array:
+                JSONArray dataArray = obj.getJSONArray("package");
 
-                        // Now through a for we fill the array list with models of type WordModel:
-                        for (int i = 0; i < dataArray.length(); i++) {
-                            WordModel wordModel = new WordModel();
-                            JSONObject dataobj = dataArray.getJSONObject(i);
-                            wordModel.setId(dataobj.getString("id"));
-                            wordModel.setWord(dataobj.getString("cuvant"));
-                            wordModel.setExplanation(dataobj.getString("expl"));
-                            wordModel.setDate(dataobj.getString("datains"));
-                            wordModelArrayList.add(wordModel);
-                        } // end for.
+                // Now through a for we fill the array list with models of type WordModel:
+                for (int i = 0; i < dataArray.length(); i++) {
+                    WordModel wordModel = new WordModel();
+                    JSONObject dataobj = dataArray.getJSONObject(i);
+                    wordModel.setId(dataobj.getString("id"));
+                    wordModel.setWord(dataobj.getString("cuvant"));
+                    wordModel.setExplanation(dataobj.getString("expl"));
+                    wordModel.setDate(dataobj.getString("datains"));
+                    wordModelArrayList.add(wordModel);
+                } // end for.
 
-                        // Now we have the array list of WordModels, we can use it in another method to update effectively:
-                        updateDBEffectively(wordModelArrayList);
+                // Now we have the array list of WordModels, we can use it in another method to update effectively:
+                updateDBEffectively(wordModelArrayList);
 
-                    } catch (JSONException e) {
-                        // e.printStackTrace();
-                        GUITools.showUnknownErrorAlert(MainActivity.this);
-                    }
-                },
-                error -> {
-                    // Displaying an error if it occurs
-                    GUITools.showUnknownErrorAlert(MainActivity.this);
-                });
+            } catch (JSONException e) {
+                // e.printStackTrace();
+                GUITools.showUnknownErrorAlert(MainActivity.this);
+            }
+        }, error -> {
+            // Displaying an error if it occurs
+            GUITools.showUnknownErrorAlert(MainActivity.this);
+        });
 
         //creating a request queue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -607,17 +585,20 @@ public class MainActivity extends Activity {
     } // end requestJSON() method.
 
     private void updateDBEffectively(ArrayList<WordModel> wordModelArrayList) {
-
         // If the array list has at least one entry:
         int total = wordModelArrayList.size();
         if (total > 0) {
             int totalInsertions = 0;
             for (int i = 0; i < wordModelArrayList.size(); i++) {
                 // Create the SQL for insert into database:
-                String sql = "insert into dictionar (id, termen, explicatie, data) values ('" + wordModelArrayList.get(i).getId() + "', '" + wordModelArrayList.get(i).getWord() + "', '" + wordModelArrayList.get(i).getExplanation() + "', '" + wordModelArrayList.get(i).getDate() + "');";
+                String mId = wordModelArrayList.get(i).getId();
+                String mWord = wordModelArrayList.get(i).getWord();
+                String mExplanation = wordModelArrayList.get(i).getExplanation();
+                String mDate = wordModelArrayList.get(i).getDate();
+// The string effectively:
+                String sql = "insert into dictionar (id, termen, explicatie, data) values ('" + mId + "', '" + mWord + "', '" + mExplanation + "', '" + mDate + "');";
                 mDbHelper.insertData(sql);
                 totalInsertions++; // we increment the number of added words.
-                // GUITools.alert(MainActivity.this, "Un SQL demonstrativ", sql, "OK!");
             } // end for.
 
             // We announce the number of added words with plural resource:
