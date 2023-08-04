@@ -22,7 +22,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // destination path (location) of our database on device
     private static String DB_PATH = "";
     private static final String DB_NAME = "dictionar.db"; // Database name
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     private static final String SP_KEY_DB_VER = "dbVer";
 
     private SQLiteDatabase mDataBase;
@@ -104,12 +104,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     } // end copy database into DB folder.
 
     // Open the database, so we can query it
-    public boolean openDataBase() throws SQLException {
+    public void openDataBase() throws SQLException {
         String mPath = DB_PATH;
         // Log.v("mPath", mPath);
         mDataBase = SQLiteDatabase.openDatabase(mPath, null,
                 SQLiteDatabase.CREATE_IF_NECESSARY);
-        return mDataBase != null;
     }
 
     @Override
