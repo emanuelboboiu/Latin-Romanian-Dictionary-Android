@@ -22,7 +22,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // destination path (location) of our database on device
     private static String DB_PATH = "";
     private static final String DB_NAME = "dictionar.db"; // Database name
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9; // updated on Wednesday, 3rd of September, 2025.
     private static final String SP_KEY_DB_VER = "dbVer";
 
     private SQLiteDatabase mDataBase;

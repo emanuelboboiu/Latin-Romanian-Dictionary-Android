@@ -28,73 +28,62 @@ public class DisplaySettingsActivity extends Activity {
 
     } // end onCreate method.
 
+    // The method for cchoosing the size of the font:
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
         // Check which radio button was clicked:
-        switch (view.getId()) {
-            case R.id.rbRadio14:
-                if (checked) {
-                    MainActivity.textSize = 14;
-                }
-                break;
-            case R.id.rbRadio16:
-                if (checked) {
-                    MainActivity.textSize = 16;
-                }
-                break;
-            case R.id.rbRadio18:
-                if (checked) {
-                    MainActivity.textSize = 18;
-                }
-                break;
-            case R.id.rbRadio20:
-                if (checked) {
-                    MainActivity.textSize = 20;
-                }
-                break;
-            case R.id.rbRadio22:
-                if (checked) {
-                    MainActivity.textSize = 22;
-                }
-                break;
-            case R.id.rbRadio24:
-                if (checked) {
-                    MainActivity.textSize = 24;
-                }
-                break;
-            case R.id.rbRadio26:
-                if (checked) {
-                    MainActivity.textSize = 26;
-                }
-                break;
-            case R.id.rbRadio28:
-                if (checked) {
-                    MainActivity.textSize = 28;
-                }
-                break;
-            case R.id.rbRadio30:
-                if (checked) {
-                    MainActivity.textSize = 30;
-                }
-                break;
-            case R.id.rbRadio32:
-                if (checked) {
-                    MainActivity.textSize = 32;
-                }
-                break;
-            case R.id.rbRadio34:
-                if (checked) {
-                    MainActivity.textSize = 34;
-                }
-                break;
-            case R.id.rbRadio36:
-                if (checked) {
-                    MainActivity.textSize = 36;
-                }
-                break;
-        } // } // end switch.
+        int viewId = view.getId();
+        if (viewId == R.id.rbRadio14) {
+            if (checked) {
+                MainActivity.textSize = 14;
+            }
+        } else if (viewId == R.id.rbRadio16) {
+            if (checked) {
+                MainActivity.textSize = 16;
+            }
+        } else if (viewId == R.id.rbRadio18) {
+            if (checked) {
+                MainActivity.textSize = 18;
+            }
+        } else if (viewId == R.id.rbRadio20) {
+            if (checked) {
+                MainActivity.textSize = 20;
+            }
+        } else if (viewId == R.id.rbRadio22) {
+            if (checked) {
+                MainActivity.textSize = 22;
+            }
+        } else if (viewId == R.id.rbRadio24) {
+            if (checked) {
+                MainActivity.textSize = 24;
+            }
+        } else if (viewId == R.id.rbRadio26) {
+            if (checked) {
+                MainActivity.textSize = 26;
+            }
+        } else if (viewId == R.id.rbRadio28) {
+            if (checked) {
+                MainActivity.textSize = 28;
+            }
+        } else if (viewId == R.id.rbRadio30) {
+            if (checked) {
+                MainActivity.textSize = 30;
+            }
+        } else if (viewId == R.id.rbRadio32) {
+            if (checked) {
+                MainActivity.textSize = 32;
+            }
+        } else if (viewId == R.id.rbRadio34) {
+            if (checked) {
+                MainActivity.textSize = 34;
+            }
+        } else if (viewId == R.id.rbRadio36) {
+            if (checked) {
+                MainActivity.textSize = 36;
+            }
+        }
 
         // Save now the setting:
         set.saveIntSettings("textSize", MainActivity.textSize);

@@ -1,14 +1,17 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdk 34
-    buildToolsVersion "33.0.0"
+    namespace "ro.limbalatina.dictionarlatinroman"
+    compileSdk 36
 
     defaultConfig {
         applicationId "ro.limbalatina.dictionarlatinroman"
-        minSdkVersion 23
-        targetSdkVersion 34
-        resConfigs "ro"
+        minSdk 23
+        targetSdk 36
+        versionCode 16
+        versionName "4.0"
     }
 
     buildTypes {
@@ -16,10 +19,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
     }
 }
 

@@ -48,29 +48,25 @@ public class SettingsActivity extends Activity {
         Settings set = new Settings(this); // to save changes.
 
         // Check which check box was clicked
-        switch (view.getId()) {
-            case R.id.cbtSoundsSetting:
-                MainActivity.isSound = checked;
-                set.saveBooleanSettings("isSound", MainActivity.isSound);
-                break;
+        int viewId = view.getId();
+        if (viewId == R.id.cbtSoundsSetting) {
+            MainActivity.isSound = checked;
+            set.saveBooleanSettings("isSound", MainActivity.isSound);
             /*
-             * Not necessary yet. case R.id.cbtSpeechSetting: if (checked) {
-             * MainActivity.isSpeech = true; } else { MainActivity.isSpeech = false;
-             * } set.saveBooleanSettings("isSpeech", MainActivity.isSpeech); break;
+             * Not necessary yet. else if (viewId == R.id.cbtSpeechSetting) {
+             * MainActivity.isSpeech = checked;
+             * set.saveBooleanSettings("isSpeech", MainActivity.isSpeech);
              */
-            case R.id.cbtOnshakeSetting:
-                MainActivity.isShake = checked;
-                set.saveBooleanSettings("isShake", MainActivity.isShake);
-                break;
-            case R.id.cbtScreenAwakeSetting:
-                MainActivity.isWakeLock = checked;
-                set.saveBooleanSettings("isWakeLock", MainActivity.isWakeLock);
-                break;
-            case R.id.cbtImeSetting:
-                MainActivity.isImeAction = checked;
-                set.saveBooleanSettings("isImeAction", MainActivity.isImeAction);
-                break;
-        } // end switch.
+        } else if (viewId == R.id.cbtOnshakeSetting) {
+            MainActivity.isShake = checked;
+            set.saveBooleanSettings("isShake", MainActivity.isShake);
+        } else if (viewId == R.id.cbtScreenAwakeSetting) {
+            MainActivity.isWakeLock = checked;
+            set.saveBooleanSettings("isWakeLock", MainActivity.isWakeLock);
+        } else if (viewId == R.id.cbtImeSetting) {
+            MainActivity.isImeAction = checked;
+            set.saveBooleanSettings("isImeAction", MainActivity.isImeAction);
+        }
     } // end onClick method.
 
 } // end settings activity class.

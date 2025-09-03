@@ -106,9 +106,9 @@
     <string name="paradigm_declension_cannot_be_created"><![CDATA[Din motive tehnice, nu putem declina acest substantiv.<br>În prezent sunt afișate doar paradigme pentru substantivele de declinarea I.]]></string>
 
     <!-- About dialog: -->
-    <string name="about">Despre Dicționar</string>
+    <string name="about">Despre Dicționar 4.0</string>
     <string name="app_version">Dicționar Latin – Român, versiunea 3.3.3</string>
-    <string name="app_last_update">Ultima actualizare: miercuri, 4 octombrie 2023</string>
+    <string name="app_last_update">Ultima actualizare: miercuri, 3 septembrie 2025</string>
     <string name="app_release_date">Versiune 1.0 finalizată vineri, 4 septembrie 2015</string>
     <string name="app_creator">Programat de Emanuel Boboiu (Manu)</string>
     <string name="phone_number">Telefon: +40740203043</string>
@@ -136,7 +136,7 @@
     <!-- New in 2.0: -->
     <string name="mnu_rate">Evaluați aplicația…</string>
     <string name="title_rate_app">Evaluare</string>
-    <string name="body_rate_app">Dacă acest dicționar vă este util, vă rugăm să îl evaluați în Magazin Google Play.\nMulțumim pentru interesul acordat.</string>
+    <string name="body_rate_app">Dacă acest dicționar vă este util, vă rugăm să îi dați 5 steluțe în Magazin Google Play.\nMulțumim pentru interesul acordat.</string>
     <string name="bt_rate">Evaluați!</string>
     <string name="bt_not_now">Nu acum!</string>
 
