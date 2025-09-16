@@ -1,12 +1,17 @@
 package ro.limbalatina.dictionarlatinroman;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.os.Bundle;
+import android.view.MenuItem;
+
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.RadioButton;
 
-public class DisplaySettingsActivity extends Activity {
+public class DisplaySettingsActivity extends AppCompatActivity {
 
     private Settings set;
 
@@ -15,8 +20,21 @@ public class DisplaySettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_settings);
 
-        // Some initial things like background:
-        GUITools.setLayoutInitial(this, 2);
+
+        // Find the toolbar and set it as the app's action bar
+        Toolbar toolbar = findViewById(R.id.toolbar_display_settings);
+        setSupportActionBar(toolbar);
+
+        // Get a reference to the action bar
+        ActionBar actionBar = getSupportActionBar();
+
+        // Enable the back button (the "up" button)
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        // Some initial things like background, removed to use the day night theme:
+        // GUITools.setLayoutInitial(this, 2);
 
         set = new Settings(this);
 
@@ -27,6 +45,18 @@ public class DisplaySettingsActivity extends Activity {
         radioButton.setChecked(true);
 
     } // end onCreate method.
+
+
+    // Handle the back button click
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // The user clicked the back arrow
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    } // end onOptionsItemSelected() method.
 
     // The method for cchoosing the size of the font:
     public void onRadioButtonClicked(View view) {

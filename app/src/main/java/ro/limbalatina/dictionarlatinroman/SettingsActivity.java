@@ -1,19 +1,36 @@
 package ro.limbalatina.dictionarlatinroman;
 
-import android.app.Activity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.view.MenuItem;
+
 import android.os.Bundle;
+
 import android.view.View;
 import android.widget.CheckBox;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        // Some initial things like background:
-        GUITools.setLayoutInitial(this, 2);
+        // Find the toolbar and set it as the app's action bar
+        Toolbar toolbar = findViewById(R.id.toolbar_settings);
+        setSupportActionBar(toolbar);
+
+        // Get a reference to the action bar
+        ActionBar actionBar = getSupportActionBar();
+
+        // Enable the back button (the "up" button)
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        // Some initial things like background, not anymore, we used now the day night theme.:
+        // GUITools.setLayoutInitial(this, 2);
 
         // Check or check the check boxes, depending of current boolean values:
 
@@ -39,6 +56,18 @@ public class SettingsActivity extends Activity {
         CheckBox cbtImeSetting = findViewById(R.id.cbtImeSetting);
         cbtImeSetting.setChecked(MainActivity.isImeAction);
     } // end onCreate.
+
+
+    // Handle the back button click
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // The user clicked the back arrow
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    } // end onOptionsItemSelected() method.
 
     // Let's see what happens when a check box is clicked in audio settings:
     public void onCheckboxClicked(View view) {

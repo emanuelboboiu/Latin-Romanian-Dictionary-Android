@@ -1,7 +1,5 @@
 package ro.limbalatina.dictionarlatinroman;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +9,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -158,55 +155,6 @@ public class GUITools {
         Random rand = new Random();
         return rand.nextInt((max - min) + 1) + min;
     } // end random method.
-
-    // A method to set background and other global things about a layout:
-    @SuppressLint("DiscouragedApi")
-    public static void setLayoutInitial(Context context, int layoutType) {
-        String mBackground;
-        if (MainActivity.background == null
-                || MainActivity.background.equals("")) {
-            /*
-             * It means no background was chosen and saved, we choose a random
-             * one.
-             */
-            /*
-             * Number of backgrounds, in the drawable folder. This number is
-             * also specified in Backgrounds Activity:
-             */
-            int nrOfBackgrounds = 5;
-            int curBackgroundNumber = GUITools.random(1, nrOfBackgrounds);
-
-            mBackground = "paper" + curBackgroundNumber;
-            // We save the one chosen by random:
-            MainActivity.background = mBackground;
-            Settings set = new Settings(context);
-            set.saveStringSettings("background", MainActivity.background);
-        } else {
-            /* It means is was saved, we get it from the static String variable: */
-            mBackground = MainActivity.background;
-        } // end if a background was chosen.
-
-        // Determine the background ID:
-        int resId = 0;
-        if (!MainActivity.background.equals("paper0")) {
-            resId = context.getResources().getIdentifier(mBackground,
-                    "drawable", context.getPackageName());
-        }
-
-        /* layoutType 1 means relative, 2 means linear. */
-        // if is a relative layout:
-        if (layoutType == 1) {
-            RelativeLayout rl = ((Activity) context)
-                    .findViewById(R.id.layoutMain);
-            rl.setBackgroundResource(resId);
-        } // end if layoutType is RelativeLayout.
-        // Now for LinearLayout:
-        else if (layoutType == 2) {
-            LinearLayout ll = ((Activity) context)
-                    .findViewById(R.id.layoutMain);
-            ll.setBackgroundResource(resId);
-        } // end if is a LinearLayout.
-    } // end setLayoutInitial() method.
 
 
     // A method to get current time in seconds:

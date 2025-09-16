@@ -1,7 +1,12 @@
 package ro.limbalatina.dictionarlatinroman;
 
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.appbar.MaterialToolbar;
+
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +15,6 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,7 +45,7 @@ import java.util.ArrayList;
  * This is the main class of this application.
  * */
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     // The following fields are used for the shake detection:
     private SensorManager mSensorManager;
@@ -79,6 +83,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Now set the toolbar:
+        MaterialToolbar tb = findViewById(R.id.topAppBar);
+        setSupportActionBar(tb); // makes toolbar act as ActionBar
+
         // Charge settings:
         Settings set = new Settings(this);
         set.chargeSettings();
@@ -114,8 +122,9 @@ public class MainActivity extends Activity {
         // a method found in this class.
         updateGUIFirst();
 
-        // Some initial things like background:
-        GUITools.setLayoutInitial(this, 1);
+        // Some initial things like background, we comment it because we do not use it anymore:
+        // GUITools.setLayoutInitial(this, 1);
+
         GUITools.checkIfRated(this);
 
         // ShakeDetector initialisation:
@@ -180,8 +189,6 @@ public class MainActivity extends Activity {
 
         if (id == R.id.mnuActionSettings) {
             goToSettings();
-        } else if (id == R.id.mnuBackgroundSettings) {
-            goToBackgroundSettings();
         } else if (id == R.id.mnuDisplaySettings) {
             goToDisplaySettings();
         } else if (id == R.id.mnuInformation) {
@@ -222,15 +229,6 @@ public class MainActivity extends Activity {
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     } // end go to settings method.
-
-    private void goToBackgroundSettings() {
-        // Called when the user clicks the background settings option in menu:
-        Intent intent = new Intent(this, BackgroundActivity.class);
-        String message;
-        message = "Latin Dictionary"; // without a reason.
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-    } // end go to background settings method.
 
     private void goToDisplaySettings() {
         // Called when the user clicks the display settings option in menu:
