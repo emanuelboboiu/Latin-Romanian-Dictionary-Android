@@ -16,7 +16,9 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UiInsets.enableEdgeToEdge(this);
         setContentView(R.layout.activity_settings);
+        UiInsets.applySystemBarInsets(this);
 
         // Find the toolbar and set it as the app's action bar
         Toolbar toolbar = findViewById(R.id.toolbar_settings);

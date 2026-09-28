@@ -37,6 +37,4 @@
     <color name="md_theme_inverseOnSurface">#313033</color>
     <color name="md_theme_inversePrimary">#6750A4</color>
 
-    <!-- Some custom colors: -->
-    <color name="search_hint_color">#E6E1E5</color>
 </resources>

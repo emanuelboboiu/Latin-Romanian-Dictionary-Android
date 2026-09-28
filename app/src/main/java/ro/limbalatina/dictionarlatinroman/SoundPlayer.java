@@ -15,16 +15,14 @@ public class SoundPlayer {
     @SuppressLint("DiscouragedApi")
     public static void playSimple(Context context, String fileName) {
         if (MainActivity.isSound) {
-            MediaPlayer mp = new MediaPlayer();
-
             int resID;
             resID = context.getResources().getIdentifier(fileName, "raw",
                     context.getPackageName());
-            mp = MediaPlayer.create(context, resID);
-
-            mp.start();
-
-            mp.setOnCompletionListener(MediaPlayer::release);
+            MediaPlayer mp = MediaPlayer.create(context, resID);
+            if (mp != null) {
+                mp.setOnCompletionListener(MediaPlayer::release);
+                mp.start();
+            }
         } // end if is sound activated.
     } // end static method playSimple.
 

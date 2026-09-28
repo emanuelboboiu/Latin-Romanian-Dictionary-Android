@@ -1,6 +1,7 @@
 package ro.limbalatina.dictionarlatinroman;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
@@ -82,11 +83,16 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llResults = null; // for central part of the activity.
     private LinearLayout llBottomInfo = null; // we attribute to it in onCreate.
     private TextView resultHeading;
+    private long lastSearchTime;
+    private String lastSearchWord;
+    private int lastSearchDirection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UiInsets.enableEdgeToEdge(this);
         setContentView(R.layout.activity_main);
+        UiInsets.applySystemBarInsets(this);
 
         // Now set the toolbar:
         MaterialToolbar tb = findViewById(R.id.topAppBar);
@@ -324,15 +330,8 @@ public class MainActivity extends AppCompatActivity {
             SoundPlayer.playSimple(this, "results_not_available");
 
             return null;
-        } else {
-            // Post the statistics and return:
-            String language = "lat";
-            if (direction == 1) {
-                language = "rom";
-            }
-            Statistics.postStats(this, text, language);
-            return text;
         }
+        return text;
     } // end getTextFromEditText() method.
 
     // Search the selected language and show at most the configured number of results.
@@ -341,6 +340,17 @@ public class MainActivity extends AppCompatActivity {
         if (word == null) {
             return;
         }
+
+        // A rapid second activation of the same search should not replay its sound.
+        long now = SystemClock.elapsedRealtime();
+        if (word.equals(lastSearchWord) && direction == lastSearchDirection
+                && now - lastSearchTime < 800) {
+            return;
+        }
+        lastSearchWord = word;
+        lastSearchDirection = direction;
+        lastSearchTime = now;
+        Statistics.postStats(this, word, direction == 0 ? "lat" : "rom");
 
         ScrollView resultsScrollView = findViewById(R.id.svResults);
         resultsScrollView.scrollTo(0, 0);
@@ -431,6 +441,7 @@ public class MainActivity extends AppCompatActivity {
         clearResultRows();
         resultHeading.setVisibility(View.GONE);
         resultHeading.setText(null);
+        lastSearchTime = 0;
 
         // Show again the llBottomInfo layout:
         llBottomInfo.setVisibility(View.VISIBLE);

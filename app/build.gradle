@@ -10,8 +10,8 @@ android {
         applicationId "ro.limbalatina.dictionarlatinroman"
         minSdk 23
         targetSdk 36
-        versionCode 18
-        versionName "4.3"
+        versionCode 19
+        versionName "5.0"
     }
 
     compileOptions {
@@ -28,6 +28,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.core:core:1.17.0'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'androidx.appcompat:appcompat:1.7.1'     // or latest stable AppCompat
     implementation 'com.google.android.material:material:1.13.0'
