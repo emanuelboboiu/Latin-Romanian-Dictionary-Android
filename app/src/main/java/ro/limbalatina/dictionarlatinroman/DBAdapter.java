@@ -1,7 +1,9 @@
 package ro.limbalatina.dictionarlatinroman;
 
 import java.io.IOException;
+import java.util.List;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -45,9 +47,26 @@ public class DBAdapter {
         return mCur;
     }
 
-    // A method to insert into a table:
-    public void insertData(String sql) {
-        mDb.execSQL(sql);
-    } // end insert data.
+    public int insertWords(List<WordModel> words) {
+        int inserted = 0;
+        mDb.beginTransaction();
+        try {
+            for (WordModel word : words) {
+                ContentValues values = new ContentValues();
+                values.put("id", Long.parseLong(word.getId()));
+                values.put("termen", word.getWord());
+                values.put("explicatie", word.getExplanation());
+                values.put("data", word.getDate());
+                if (mDb.insertWithOnConflict("dictionar", null, values,
+                        SQLiteDatabase.CONFLICT_IGNORE) != -1) {
+                    inserted++;
+                }
+            }
+            mDb.setTransactionSuccessful();
+        } finally {
+            mDb.endTransaction();
+        }
+        return inserted;
+    }
 
 } // end class TestAdapter.

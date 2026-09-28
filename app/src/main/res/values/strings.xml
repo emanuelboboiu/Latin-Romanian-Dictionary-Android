@@ -66,9 +66,9 @@
     <string name="mnu_about">Despre Dicționar</string>
     <string name="mnu_open_help">Ajutor</string>
     <string name="mnu_online_version">Vedeți varianta web</string>
-    <string name="mnu_default_settings">Resetare program la valorile inițiale</string>
-    <string name="title_default_settings">Resetare Dicționar Latin – Român</string>
-    <string name="body_default_settings">Sunteți sigur că vreți să resetați toate valorile?\nProgramul va fi in starea inițială.</string>
+    <string name="mnu_default_settings">Resetare setări</string>
+    <string name="title_default_settings">Resetare setări</string>
+    <string name="body_default_settings">Sunteți sigur că vreți să readuceți setările la valorile inițiale?\nCuvintele descărcate vor rămâne în dicționar.</string>
 
     <!-- Settings Activity: -->
     <string name="title_activity_settings">Setări generale</string>

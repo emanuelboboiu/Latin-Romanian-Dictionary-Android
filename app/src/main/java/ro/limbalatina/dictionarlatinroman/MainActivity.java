@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -557,7 +558,7 @@ public class MainActivity extends AppCompatActivity {
                 // Now we have the array list of WordModels, we can use it in another method to update effectively:
                 updateDBEffectively(wordModelArrayList);
 
-            } catch (JSONException e) {
+            } catch (JSONException | SQLiteException | NumberFormatException e) {
                 // e.printStackTrace();
                 GUITools.showUnknownErrorAlert(MainActivity.this);
             }
@@ -575,21 +576,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateDBEffectively(ArrayList<WordModel> wordModelArrayList) {
         // If the array list has at least one entry:
-        int total = wordModelArrayList.size();
-        if (total > 0) {
-            int totalInsertions = 0;
-            for (int i = 0; i < wordModelArrayList.size(); i++) {
-                // Create the SQL for insert into database:
-                String mId = wordModelArrayList.get(i).getId();
-                String mWord = wordModelArrayList.get(i).getWord();
-                String mExplanation = wordModelArrayList.get(i).getExplanation();
-                String mDate = wordModelArrayList.get(i).getDate();
-// The string effectively:
-                String sql = "insert into dictionar (id, termen, explicatie, data) values ('" + mId + "', '" + mWord + "', '" + mExplanation + "', '" + mDate + "');";
-                mDbHelper.insertData(sql);
-                totalInsertions++; // we increment the number of added words.
-            } // end for.
-
+        int totalInsertions = mDbHelper.insertWords(wordModelArrayList);
+        if (totalInsertions > 0) {
             // We announce the number of added words with plural resource:
             Resources res = getResources();
             String addedWords = res.getQuantityString(R.plurals.tv_added_words, totalInsertions, totalInsertions);

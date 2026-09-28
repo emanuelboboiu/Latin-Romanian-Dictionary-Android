@@ -169,9 +169,6 @@ public class Settings {
         // For keeping screen awake:
         saveBooleanSettings("isWakeLock", false);
 
-        // Save DataBase version to 0:
-        saveIntSettings("dbVer", 0);
-
         // For search direction:
         saveIntSettings("direction", 0);
 
