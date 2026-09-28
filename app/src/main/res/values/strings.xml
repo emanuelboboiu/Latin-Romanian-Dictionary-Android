@@ -10,6 +10,7 @@
     <string name="hint_scrie_aici">Scrieți aici…</string>
     <string name="bt_search">Căutare</string>
     <string name="bt_switch">Inversează limbile</string>
+    <string name="switch_direction_accessibility">%1$s. Inversează limbile.</string>
     <string name="bt_close">Închidere</string>
     <string name="bt_ok">OK</string>
 
@@ -21,9 +22,13 @@
     <string name="bt_cancel_search">Golire</string>
     <string name="warning">Avertisment</string>
     <string name="warning_wrong_search">Trebuie să scrieți minimum două caractere pentru a căuta!</string>
-    <string name="warning_not_results"><![CDATA[Nu a fost găsit niciun rezultat!<br>Ați căutat: <i>%1$s</i>.<br>Încercați din nou scriind primele litere ale cuvântului latin.]]></string>
-    <string name="warning_not_results_romanian"><![CDATA[Nu a fost găsit niciun rezultat!<br>Ați căutat: <i>%1$s</i>.<br>Încercați alt cuvânt românesc sau doar o parte a lui.]]></string>
+    <string name="no_results_heading">Nu a fost găsit niciun rezultat!</string>
+    <string name="warning_not_results"><![CDATA[Ați căutat: <i>%1$s</i>.<br>Încercați din nou scriind primele litere ale cuvântului latin.]]></string>
+    <string name="warning_not_results_romanian"><![CDATA[Ați căutat: <i>%1$s</i>.<br>Încercați alt cuvânt românesc sau doar o parte a lui.]]></string>
     <string name="tv_word_and_explanation"><![CDATA[<b>%1$s</b> – %2$s]]></string>
+    <string name="result_open_paradigm">Afișează paradigma</string>
+    <string name="result_show_part_of_speech">Afișează partea de vorbire</string>
+    <string name="check_updates_accessibility">Verifică dacă există cuvinte noi</string>
     <string name="results_limit_notice">Se afișează primele %1$d de rezultate.</string>
     <!-- A plurals resource for results: -->
     <plurals name="tv_number_of_results">

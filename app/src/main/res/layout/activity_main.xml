@@ -113,10 +113,13 @@
                         android:id="@id/tvNumberOfResults"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:accessibilityHeading="true"
+                        android:accessibilityLiveRegion="polite"
                         android:focusable="true"
                         android:gravity="center_vertical|center_horizontal"
                         android:nextFocusUp="@id/btSearch"
-                        android:textColor="?attr/colorOnBackground" />
+                        android:textColor="?attr/colorOnBackground"
+                        android:visibility="gone" />
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

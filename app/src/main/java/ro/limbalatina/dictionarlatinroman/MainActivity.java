@@ -3,6 +3,8 @@ package ro.limbalatina.dictionarlatinroman;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     // Controls used globally in the application:
     private LinearLayout llResults = null; // for central part of the activity.
     private LinearLayout llBottomInfo = null; // we attribute to it in onCreate.
+    private TextView resultHeading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
         // Find the llResults and llBottomInfo:
         llResults = findViewById(R.id.llResults);
         llBottomInfo = findViewById(R.id.llBottomInfo);
+        resultHeading = findViewById(R.id.tvNumberOfResults);
+        ViewCompat.setAccessibilityHeading(resultHeading, true);
 
         // Initialise the string tools object:
         st = new StringTools(this);
@@ -280,6 +285,9 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(availableWords);
 // Make this text view clickable, call the update method, the same as from the menu:
         tv.setOnClickListener(v -> requestJSON());
+        ViewCompat.replaceAccessibilityAction(tv,
+                AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+                getString(R.string.check_updates_accessibility), null);
 
         // Add an action listener for the keyboard:
         EditText input = findViewById(R.id.etWord);
@@ -351,22 +359,18 @@ public class MainActivity extends AppCompatActivity {
 
             SoundPlayer.playSimple(this, "results_shown");
             llBottomInfo.setVisibility(View.GONE);
-            LinearLayout results = findViewById(R.id.llResults);
-            results.removeAllViews();
+            clearResultRows();
 
             String foundResults = getResources().getQuantityString(
                     R.plurals.tv_number_of_results, count, count);
             if (count > resultsLimit) {
                 foundResults += "\n" + getString(R.string.results_limit_notice, resultsLimit);
             }
-            TextView title = new TextView(this);
-            title.setId(R.id.tvNumberOfResults);
-            title.setFocusable(true);
-            title.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize + 1);
-            title.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            title.setPadding(mPaddingDP, mPaddingDP, mPaddingDP, mPaddingDP);
-            title.setText(foundResults);
-            results.addView(title);
+            resultHeading.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize + 1);
+            resultHeading.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            resultHeading.setPadding(mPaddingDP, mPaddingDP, mPaddingDP, mPaddingDP);
+            resultHeading.setVisibility(View.VISIBLE);
+            resultHeading.setText(foundResults);
 
             cursor.moveToFirst();
             int displayed = 0;
@@ -390,7 +394,13 @@ public class MainActivity extends AppCompatActivity {
                     paradigm.showPartOfSpeech(formatDateOfInsertionInDB(date));
                     return true;
                 });
-                results.addView(result);
+                ViewCompat.replaceAccessibilityAction(result,
+                        AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+                        getString(R.string.result_open_paradigm), null);
+                ViewCompat.replaceAccessibilityAction(result,
+                        AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_LONG_CLICK,
+                        getString(R.string.result_show_part_of_speech), null);
+                llResults.addView(result);
                 displayed++;
             } while (displayed < resultsLimit && cursor.moveToNext());
         }
@@ -418,7 +428,9 @@ public class MainActivity extends AppCompatActivity {
         } // end if is from cancelButton or shake action.
 
         // Erase also the llResults layout:
-        llResults.removeAllViews();
+        clearResultRows();
+        resultHeading.setVisibility(View.GONE);
+        resultHeading.setText(null);
 
         // Show again the llBottomInfo layout:
         llBottomInfo.setVisibility(View.VISIBLE);
@@ -432,8 +444,12 @@ public class MainActivity extends AppCompatActivity {
         llBottomInfo.setVisibility(View.VISIBLE);
 
         // Clear the previous content of the llResult layout:
-        LinearLayout ll = findViewById(R.id.llResults);
-        ll.removeAllViews();
+        clearResultRows();
+        resultHeading.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize + 1);
+        resultHeading.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        resultHeading.setPadding(mPaddingDP, mPaddingDP, mPaddingDP, mPaddingDP);
+        resultHeading.setVisibility(View.VISIBLE);
+        resultHeading.setText(R.string.no_results_heading);
 
         // Create a TextView for message no results:
         TextView tv = new TextView(this);
@@ -445,8 +461,15 @@ public class MainActivity extends AppCompatActivity {
         String tvText = getString(messageId, TextUtils.htmlEncode(searchedWord));
         CharSequence tvSeq = MyHtml.fromHtml(tvText);
         tv.setText(tvSeq);
-        ll.addView(tv);
+        llResults.addView(tv);
     } // end showWhenNoResults method.
+
+    private void clearResultRows() {
+        int resultCount = llResults.getChildCount() - 1;
+        if (resultCount > 0) {
+            llResults.removeViews(1, resultCount);
+        }
+    }
 
     // A method to show information in an alert LinearLayout:
     private void showInformation() {
@@ -487,6 +510,8 @@ public class MainActivity extends AppCompatActivity {
         // Set also the image with flags for switch button:
         String flagFileName = "flag" + direction;
         ImageButton ib = findViewById(R.id.btSwitch);
+        ib.setContentDescription(getString(R.string.switch_direction_accessibility,
+                aDirection[direction]));
         String uri = "@drawable/" + flagFileName;
         @SuppressLint("DiscouragedApi") int imageResource = getResources().getIdentifier(uri, null, getPackageName());
         ib.setImageResource(imageResource);
