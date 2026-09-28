@@ -1,66 +1,35 @@
 package ro.limbalatina.dictionarlatinroman;
 
-/*
- * Class started on 24 September 2014 by Manu
- * Methods for statistics, like postStatistics.
- */
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import android.content.Context;
+import android.net.Uri;
 
-import android.os.AsyncTask;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
-public class Statistics {
+public final class Statistics {
 
-	// A method to post the searched word and the source language:
-	public void postStats(final String word, final String language) {
-		// Create the URL:
-		String url = "http://www.limbalatina.ro/insert_android_stats.php?cuvant="
-				+ word + "&limba=" + language;
-		new GetWebData().execute(url);
-	} // end post data.
+    private static RequestQueue requestQueue;
 
-	// This is a subclass:
-	private class GetWebData extends AsyncTask<String, String, String> {
-		// execute before task:
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-		}
+    private Statistics() {
+    }
 
-		// Execute task
-		String urlText = "";
+    public static void postStats(Context context, String word, String language) {
+        Uri uri = Uri.parse("https://www.limbalatina.ro/insert_android_stats.php")
+                .buildUpon()
+                .appendQueryParameter("cuvant", word)
+                .appendQueryParameter("limba", language)
+                .build();
+        StringRequest request = new StringRequest(Request.Method.GET, uri.toString(),
+                response -> { }, error -> { });
+        getRequestQueue(context).add(request);
+    }
 
-		@Override
-		protected String doInBackground(String... strings) {
-			StringBuilder content = new StringBuilder();
-			urlText = strings[0];
-			try {
-				// Create a URL object:
-				URL url = new URL(urlText);
-				// Create a URLConnection object:
-				URLConnection urlConnection = url.openConnection();
-				// Wrap the URLConnection in a BufferedReader:
-				BufferedReader bufferedReader = new BufferedReader(
-						new InputStreamReader(urlConnection.getInputStream()));
-				String line;
-				// Read from the URLConnection via the BufferedReader:
-				while ((line = bufferedReader.readLine()) != null) {
-					content.append(line);
-				}
-				bufferedReader.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return content.toString();
-		} // end doInBackground() method.
-
-		// Execute after task with the task result as string:
-		@Override
-		protected void onPostExecute(String s) {
-			// Do nothing yet.
-		} // end postExecute() method.
-	} // end subclass.
-
-} // end statistics class.
+    private static synchronized RequestQueue getRequestQueue(Context context) {
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+        }
+        return requestQueue;
+    }
+}

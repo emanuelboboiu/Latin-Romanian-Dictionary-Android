@@ -22,7 +22,9 @@
     <string name="warning">Avertisment</string>
     <string name="warning_wrong_search">Trebuie să scrieți minimum două caractere pentru a căuta!</string>
     <string name="warning_not_results"><![CDATA[Nu a fost găsit niciun rezultat!<br>Ați căutat: <i>%1$s</i>.<br>Încercați din nou scriind primele litere ale cuvântului latin.]]></string>
+    <string name="warning_not_results_romanian"><![CDATA[Nu a fost găsit niciun rezultat!<br>Ați căutat: <i>%1$s</i>.<br>Încercați alt cuvânt românesc sau doar o parte a lui.]]></string>
     <string name="tv_word_and_explanation"><![CDATA[<b>%1$s</b> – %2$s]]></string>
+    <string name="results_limit_notice">Se afișează primele %1$d de rezultate.</string>
     <!-- A plurals resource for results: -->
     <plurals name="tv_number_of_results">
         <item quantity="one">A fost găsit un rezultat</item>

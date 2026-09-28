@@ -11,10 +11,10 @@ public class StringTools {
         this.context = context;
     }// end constructor for context.
 
-    // A method to polish a string:
-    public String escapeString(String str) {
-        return str.replaceAll("'", "''");
-    } // end polishString() method.
+    // Escape LIKE wildcards so the search treats them as typed characters.
+    public String escapeLikePattern(String str) {
+        return str.replace("!", "!!").replace("%", "!%").replace("_", "!_");
+    }
 
     public void doNothing() {
         String msg = context.getString(R.string.about);

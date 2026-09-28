@@ -16,6 +16,7 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -205,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
             GUITools.aboutDialog(this);
         } // end if about game is chosen in main menu.
         else if (id == R.id.mnuOnlineDictionary) {
-            GUITools.openBrowser(this, "http://www.dictionar.limbalatina.ro");
+            GUITools.openBrowser(this, "https://www.dictionar.limbalatina.ro");
         } // end if the web version is chosen in menu.
 
         return super.onOptionsItemSelected(item);
@@ -307,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
         EditText input = findViewById(R.id.etWord);
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
-        String text = input.getText().toString();
+        String text = input.getText().toString().trim();
         // Check if there is something typed there:
         if (text.length() < 2) {
             // Show a warning here if written text is shorter than 2 characters:
@@ -321,113 +322,79 @@ public class MainActivity extends AppCompatActivity {
             if (direction == 1) {
                 language = "rom";
             }
-            Statistics stats = new Statistics();
-            stats.postStats(text, language);
+            Statistics.postStats(this, text, language);
             return text;
         }
     } // end getTextFromEditText() method.
 
-    // The method to search and show a query:
+    // Search the selected language and show at most the configured number of results.
     private void getWordFromDB() {
-
-        // Get the string filled in the EditText:
-
         String word = getTextFromEditText();
+        if (word == null) {
+            return;
+        }
 
-        // Only if there is something typed in the EditText:
-        if (word != null) {
-            /*
-             * Polish the string if there are one apostrophe or quote or other
-             * special characters:
-             */
-            word = st.escapeString(word);
+        ScrollView resultsScrollView = findViewById(R.id.svResults);
+        resultsScrollView.scrollTo(0, 0);
+        String escapedWord = st.escapeLikePattern(word);
+        String field = direction == 0 ? "termen" : "explicatie";
+        String pattern = direction == 0 ? escapedWord + "%" : "%" + escapedWord + "%";
+        String sql = "SELECT * FROM dictionar WHERE " + field
+                + " LIKE ? ESCAPE '!' ORDER BY termen COLLATE NOCASE";
 
-            // First sear for direction 0, Latin Romanian:
-            Cursor cursor;
-            if (direction == 0) {
-                cursor = mDbHelper.queryData("SELECT * from dictionar WHERE termen LIKE '" + word + "%' ORDER BY termen COLLATE NOCASE");
-            } else {
-                cursor = mDbHelper.queryData("SELECT * from dictionar WHERE explicatie LIKE '%" + word + "%' ORDER BY termen COLLATE NOCASE");
-
-            } // end if is Romanian Latin direction.
-
-            // Only if there are results:
+        try (Cursor cursor = mDbHelper.queryData(sql, new String[]{pattern})) {
             int count = cursor.getCount();
-            if (count > 0) {
-
-                // Play a specific sound for results shown:
-                SoundPlayer.playSimple(this, "results_shown");
-
-                // Hide the llBottomInfo layout:
-                llBottomInfo.setVisibility(View.GONE);
-
-                // Clear the previous content of the llResult layout:
-                LinearLayout ll = findViewById(R.id.llResults);
-                ll.removeAllViews();
-
-                // Create a text view for title, announcing the number of
-                // results:
-                // First take the corresponding plural resource:
-                Resources res = getResources();
-                String foundResults = res.getQuantityString(R.plurals.tv_number_of_results, count, count);
-                // Create the number of results text view:
-                TextView tv = new TextView(this);
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize + 1);
-                tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-                tv.setPadding(mPaddingDP, mPaddingDP, mPaddingDP, mPaddingDP);
-                tv.setText(foundResults);
-                ll.addView(tv);
-
-                // Create TextViews for each word:
-                // For limit, we have a variable which will be incremented until resultsLimit:
-                int it = 0;
-                cursor.moveToFirst();
-                do {
-                    tv = new TextView(this);
-                    tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-                    // tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-                    tv.setPadding(mPaddingDP, mPaddingDP, mPaddingDP, mPaddingDP);
-                    // w means word, e means explanation  and d means the date:
-                    final String w = cursor.getString(1);
-                    final String e = cursor.getString(2);
-                    final String d = cursor.getString(3);
-
-                    String tvText = String.format(getString(R.string.tv_word_and_explanation), w, e);
-                    CharSequence tvSeq = MyHtml.fromHtml(tvText);
-                    tv.setText(tvSeq);
-
-                    // For a short click, show paradigm of current Latin word:
-                    tv.setOnClickListener(view -> {
-                        Paradigm p = new Paradigm(mFinalContext, w, e);
-                        p.makeParadigm();
-                    });
-                    // End add listener for short click on a result.
-
-                    // For a long click, show part of speech:
-                    tv.setOnLongClickListener(view -> {
-                        Paradigm p = new Paradigm(mFinalContext, w, e);
-                        p.showPartOfSpeech(formatDateOfInsertionInDB(d));
-                        return true;
-                    });
-                    // End add listener for long click on a result.
-
-                    ll.addView(tv);
-
-                    it++;
-                    if (it >= resultsLimit) {
-                        break;
-                    }
-                } while (cursor.moveToNext());
-                // end do ... while.
-            } // end if there were results in cursor.
-
-            // If there are no results, getCount is 0:
-            else {
+            if (count == 0) {
                 showWhenNoResults(word);
-            } // end if there were no results.
-        } // end if there was something typed in the EditText.
+                return;
+            }
 
-    } // end getWordFromDB() method.
+            SoundPlayer.playSimple(this, "results_shown");
+            llBottomInfo.setVisibility(View.GONE);
+            LinearLayout results = findViewById(R.id.llResults);
+            results.removeAllViews();
+
+            String foundResults = getResources().getQuantityString(
+                    R.plurals.tv_number_of_results, count, count);
+            if (count > resultsLimit) {
+                foundResults += "\n" + getString(R.string.results_limit_notice, resultsLimit);
+            }
+            TextView title = new TextView(this);
+            title.setId(R.id.tvNumberOfResults);
+            title.setFocusable(true);
+            title.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize + 1);
+            title.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            title.setPadding(mPaddingDP, mPaddingDP, mPaddingDP, mPaddingDP);
+            title.setText(foundResults);
+            results.addView(title);
+
+            cursor.moveToFirst();
+            int displayed = 0;
+            do {
+                final String latinWord = cursor.getString(1);
+                final String explanation = cursor.getString(2);
+                final String date = cursor.getString(3);
+
+                TextView result = new TextView(this);
+                result.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+                result.setPadding(mPaddingDP, mPaddingDP, mPaddingDP, mPaddingDP);
+                String resultText = getString(R.string.tv_word_and_explanation,
+                        latinWord, explanation);
+                result.setText(MyHtml.fromHtml(resultText));
+                result.setOnClickListener(view -> {
+                    Paradigm paradigm = new Paradigm(mFinalContext, latinWord, explanation);
+                    paradigm.makeParadigm();
+                });
+                result.setOnLongClickListener(view -> {
+                    Paradigm paradigm = new Paradigm(mFinalContext, latinWord, explanation);
+                    paradigm.showPartOfSpeech(formatDateOfInsertionInDB(date));
+                    return true;
+                });
+                results.addView(result);
+                displayed++;
+            } while (displayed < resultsLimit && cursor.moveToNext());
+        }
+    }
 
     // A method to cancel a search:
     public void cancelSearchButton(View view) {
@@ -462,6 +429,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Play a corresponding sound if results are not available:
         SoundPlayer.playSimple(this, "results_not_available");
+        llBottomInfo.setVisibility(View.VISIBLE);
 
         // Clear the previous content of the llResult layout:
         LinearLayout ll = findViewById(R.id.llResults);
@@ -471,7 +439,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         tv.setPadding(mPaddingDP, mPaddingDP, mPaddingDP, mPaddingDP);
-        String tvText = String.format(getString(R.string.warning_not_results), searchedWord);
+        int messageId = direction == 0
+                ? R.string.warning_not_results
+                : R.string.warning_not_results_romanian;
+        String tvText = getString(messageId, TextUtils.htmlEncode(searchedWord));
         CharSequence tvSeq = MyHtml.fromHtml(tvText);
         tv.setText(tvSeq);
         ll.addView(tv);

@@ -100,7 +100,7 @@ public class GUITools {
     public static void openBrowser(final Context context, String url) {
 
         if (!url.startsWith(HTTP) && !url.startsWith(HTTPS)) {
-            url = HTTP + url;
+            url = HTTPS + url;
         }
 
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));

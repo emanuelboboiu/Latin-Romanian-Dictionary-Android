@@ -40,7 +40,11 @@ public class DBAdapter {
     }
 
     public Cursor queryData(String sql) {
-        Cursor mCur = mDb.rawQuery(sql, null);
+        return queryData(sql, null);
+    }
+
+    public Cursor queryData(String sql, String[] selectionArgs) {
+        Cursor mCur = mDb.rawQuery(sql, selectionArgs);
         if (mCur != null) {
             mCur.moveToNext();
         }
