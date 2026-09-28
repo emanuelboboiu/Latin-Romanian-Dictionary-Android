@@ -167,15 +167,6 @@ public class MainActivity extends AppCompatActivity {
     } // end onDestroy method.
 
     @Override
-    public void onBackPressed() {
-        this.finish();
-        Intent setIntent = new Intent(Intent.ACTION_MAIN);
-        setIntent.addCategory(Intent.CATEGORY_HOME);
-        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(setIntent);
-    } // end onBackPressed()
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);

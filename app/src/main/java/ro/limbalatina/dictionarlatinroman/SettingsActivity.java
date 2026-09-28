@@ -50,7 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // For keeping screen awake:
         CheckBox cbtScreenAwakeSetting = findViewById(R.id.cbtScreenAwakeSetting);
-        cbtScreenAwakeSetting.setChecked(MainActivity.isSpeech);
+        cbtScreenAwakeSetting.setChecked(MainActivity.isWakeLock);
 
         // For IME DONE button of the keyboard:
         CheckBox cbtImeSetting = findViewById(R.id.cbtImeSetting);

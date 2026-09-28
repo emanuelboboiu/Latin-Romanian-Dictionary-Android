@@ -8,12 +8,12 @@
         android:id="@+id/mnuUpdate"
         android:orderInCategory="200"
         android:title="@string/mnu_update"
-        app:showAsAction="ifRoom|withText" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/mnuSettingsSubmenu"
         android:orderInCategory="250"
         android:title="@string/mnu_settings_submenu"
-        app:showAsAction="ifRoom|withText">
+        app:showAsAction="never">
 
         <!-- Settings submenu: -->
         <menu>

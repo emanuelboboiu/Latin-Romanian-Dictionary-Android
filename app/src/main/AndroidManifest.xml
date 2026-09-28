@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="ro.limbalatina.dictionarlatinroman">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -32,10 +31,6 @@
             android:name=".DisplaySettingsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_display_settings" />
-        <activity
-            android:name=".BackgroundActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_background" />
     </application>
 
 </manifest>

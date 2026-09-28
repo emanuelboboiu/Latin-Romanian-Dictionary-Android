@@ -96,7 +96,6 @@ public class Noun {
     // A method to decline the noun:
     private String decline1() {
         String temp;
-        String template; // extracted from strings resources.
         String theme = ""; // we determine it here.
         String[] aTerminationsSingular = {"a", "ae", "ae", "am", "a", "a"};
         String[] aTerminationsPlural;
@@ -108,24 +107,14 @@ public class Noun {
             aTerminationsPlural = new String[]{"ae", "arum", "is", "as", "ae", "is"};
         }
 
-        // Get the template1 for nouns with singular and plural:
+        // Determine the stem for the supported forms:
         if (typeOfDeclension == 1) {
-            template = context
-                    .getString(R.string.paradigm_declension_template1);
             theme = nominativeNoun.substring(0, nominativeNoun.length() - 1);
         } else if (typeOfDeclension == 2) {
-            template = context
-                    .getString(R.string.paradigm_declension_template2);
             theme = nominativeNoun.substring(0, nominativeNoun.length() - 1);
         } else if (typeOfDeclension == 3) {
-            template = context
-                    .getString(R.string.paradigm_declension_template3);
             theme = nominativeNoun.substring(0, nominativeNoun.length() - 2);
         } // end if typeOfDeclension is 3, only plural.
-        else {
-            template = context
-                    .getString(R.string.paradigm_declension_cannot_be_created);
-        } // end if typeOfDeclension cannot be determined.
 
         // Now we process the placeholders for template:
         StringBuilder singular = new StringBuilder();
@@ -140,14 +129,17 @@ public class Noun {
 
 // Now we format the string including the singular and the plural if needed:
         if (typeOfDeclension == 1) {
-            temp = String.format(template, "I", MyHtml.fromHtml(singular.toString()).toString(), MyHtml.fromHtml(plural.toString()).toString());
+            temp = context.getString(R.string.paradigm_declension_template1, "I",
+                    MyHtml.fromHtml(singular.toString()).toString(), MyHtml.fromHtml(plural.toString()).toString());
         } else if (typeOfDeclension == 2) {
-            temp = String.format(template, "I", MyHtml.fromHtml(singular.toString()).toString());
+            temp = context.getString(R.string.paradigm_declension_template2, "I",
+                    MyHtml.fromHtml(singular.toString()).toString());
         } else if (typeOfDeclension == 3) {
-            temp = String.format(template, "I", MyHtml.fromHtml(plural.toString()).toString());
+            temp = context.getString(R.string.paradigm_declension_template3, "I",
+                    MyHtml.fromHtml(plural.toString()).toString());
         } else {
             // The declension cannot be created:
-            temp = String.format(template, "I");
+            temp = context.getString(R.string.paradigm_declension_cannot_be_created);
         }
 
         return MyHtml.fromHtml(temp).toString();
